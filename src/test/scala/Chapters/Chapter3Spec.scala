@@ -84,5 +84,13 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.appendWithFold(List(1, 2, 3), List(4, 5, 6)) shouldEqual List(1, 2, 3, 4, 5, 6)
   }
 
+  "addOneToEveryElement" should "add one on every element in the list" in {
+    Chapter3.addOneToEveryElement(List(-1, -1, 6)) shouldEqual List(0, 0, 7)
+  }
+
+  "doubleToString" should "transform every double to string in a list" in {
+    Chapter3.doubleToString(List(1.1, 2.2, 3.3, 4.4)) shouldEqual List("1.1", "2.2", "3.3", "4.4")
+  }
+
   def isZero(a: Int): Boolean = a == 0
 }

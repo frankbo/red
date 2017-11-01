@@ -94,19 +94,23 @@ Int
 
   def lengthL[A](ns: List[A]): Int = foldLeft(ns, 0)((x, _) => x + 1)
 
-  def reverse[A](l: List[A]): List[A] = l match {
-    case Cons(x, xs) => foldLeft(xs, List(x))((accList, nextVal) => List.append(Cons(nextVal, Nil), accList))
-    case _ => List()
-  }
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, List[A]())((accList, nextVal) => List.append(Cons(nextVal, Nil), accList))
 
   // Todo is reverse the best way and is it performing best.
   def appendWithFold[A](l1: List[A], l2: List[A]): List[A] = l1 match {
     case Nil => l2
-    case _ => foldLeft(reverse(l1), l2)((acc, next) => Cons(next, acc))
+    case _ => foldLeft(reverse(l1), l2)((t, next) => Cons(next, t))
   }
 
+  def addOneToEveryElement(l: List[Int]): List[Int] =
+    foldRight(l, List[Int]())((next, t) => Cons(next + 1, t))
+
+  def doubleToString(l: List[Double]): List[String] =
+    foldRight(l, List[String]())((next, t) => Cons(next.toString, t))
 
 
-  // TODO 3.7, 3.8, 3.13
+
+  // TODO 3.7, 3.8, 3.13, 3.15
 
 }
