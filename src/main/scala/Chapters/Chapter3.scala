@@ -76,12 +76,37 @@ object Chapter3 {
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
     }
 
-  def sum2(ns: List[Int]): Int = foldRight(ns, 0)(_ + _)
+  def lengthR[A](as: List[A]): Int = foldRight(as, 0)((_, y) => y + 1)
 
-  def product2(ns: List[Double]): Double = foldRight(ns, 1.0)(_ * _)
+  def sumR(ns: List[Int]): Int = foldRight(ns, 0)(_ + _)
 
-  // TODO 3.7 and 3.8
+  def productR(ns: List[Double]): Double = foldRight(ns, 1.0)(_ * _)
 
-  def length[A](as: List[A]): Int = foldRight(as, 0)((_, y) => y + 1)
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B =
+    as match {
+      case Nil => z
+      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+    }
+
+  def sumL(ns: List[Int]): Int = foldLeft(ns, 0)(_ + _)
+Int
+  def prodL(ns: List[Double]): Double = foldLeft(ns, 1.0)(_ * _)
+
+  def lengthL[A](ns: List[A]): Int = foldLeft(ns, 0)((x, _) => x + 1)
+
+  def reverse[A](l: List[A]): List[A] = l match {
+    case Cons(x, xs) => foldLeft(xs, List(x))((accList, nextVal) => List.append(Cons(nextVal, Nil), accList))
+    case _ => List()
+  }
+
+  // Todo is reverse the best way and is it performing best.
+  def appendWithFold[A](l1: List[A], l2: List[A]): List[A] = l1 match {
+    case Nil => l2
+    case _ => foldLeft(reverse(l1), l2)((acc, next) => Cons(next, acc))
+  }
+
+
+
+  // TODO 3.7, 3.8, 3.13
 
 }

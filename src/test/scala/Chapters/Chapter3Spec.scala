@@ -61,7 +61,27 @@ class Chapter3Spec extends FlatSpec with Matchers {
   }
 
   "length" should "return the length of a list" in {
-    Chapter3.length(List(1,22,3,44,5,66)) shouldEqual 6
+    Chapter3.lengthR(List(1,22,3,44,5,66)) shouldEqual 6
+  }
+
+  "foldLeft" should "return the sum of a list" in {
+    Chapter3.foldLeft(List(1,22,3,4,5), 0)(_ + _) shouldEqual 35
+  }
+
+  "sumL" should "return the sum of a list" in {
+    Chapter3.sumL(List(1,22,3,4,5)) shouldEqual 35
+  }
+
+  "prodL" should "return the product of" in {
+    Chapter3.prodL(List(1.0, 2.0, 2.0, 4.0)) shouldEqual 16.0
+  }
+
+  "reverse" should "revert the passed list" in {
+    Chapter3.reverse(List(1, 2, 3)) shouldEqual List(3, 2, 1)
+  }
+
+  "appendWithFold" should "append one list to another" in {
+    Chapter3.appendWithFold(List(1, 2, 3), List(4, 5, 6)) shouldEqual List(1, 2, 3, 4, 5, 6)
   }
 
   def isZero(a: Int): Boolean = a == 0
