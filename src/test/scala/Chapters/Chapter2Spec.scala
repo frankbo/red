@@ -8,15 +8,15 @@ class Chapter2Spec extends FlatSpec with Matchers {
   }
 
   "isSorted" should "return false when the given array is NOT sorted" in {
-    Chapters.Chapter2.isSorted(Array(2, 1, 3), (fst: Int, snd: Int) => fst < snd) shouldEqual false
+    Chapters.Chapter2.isSorted(Array(2, 1, 3), isSmaller) shouldEqual false
   }
 
   "isSorted" should "return true when the given array is sorted" in {
-    Chapters.Chapter2.isSorted(Array(1, 2, 3), (fst: Int, snd: Int) => fst < snd) shouldEqual true
+    Chapters.Chapter2.isSorted(Array(1, 2, 3), isSmaller) shouldEqual true
   }
 
   "isSorted" should "return true when array is empty" in {
-    Chapters.Chapter2.isSorted(Array(), (fst: Int, snd: Int) => fst < snd) shouldEqual true
+    Chapters.Chapter2.isSorted(Array(), isSmaller) shouldEqual true
   }
 
   "curry" should "should return a curried function with one argument" in {
@@ -41,4 +41,6 @@ class Chapter2Spec extends FlatSpec with Matchers {
 
     composed(Array("Hello", "World")) shouldBe 35
   }
+
+  def isSmaller(a: Int, b: Int): Boolean = a < b
 }
