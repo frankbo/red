@@ -79,4 +79,9 @@ object Chapter3 {
   def sum2(ns: List[Int]): Int = foldRight(ns, 0)(_ + _)
 
   def product2(ns: List[Double]): Double = foldRight(ns, 1.0)(_ * _)
+
+  // TODO 3.7 and 3.8
+
+  def length[A](as: List[A]): Int = foldRight(as, 0)((_, y) => y + 1)
+
 }

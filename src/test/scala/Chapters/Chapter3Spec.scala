@@ -60,5 +60,9 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.init(List(1, 2, 3)) shouldEqual List(1, 2)
   }
 
+  "length" should "return the length of a list" in {
+    Chapter3.length(List(1,22,3,44,5,66)) shouldEqual 6
+  }
+
   def isZero(a: Int): Boolean = a == 0
 }
