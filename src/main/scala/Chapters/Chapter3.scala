@@ -109,6 +109,8 @@ Int
   def doubleToString(l: List[Double]): List[String] =
     foldRight(l, List[String]())((next, t) => Cons(next.toString, t))
 
+  def map[A,B](as: List[A])(f: A => B): List[B] =
+    foldRight(as, List[B]())((x,y) => Cons(f(x), y))
 
 
   // TODO 3.7, 3.8, 3.13, 3.15

@@ -92,5 +92,10 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.doubleToString(List(1.1, 2.2, 3.3, 4.4)) shouldEqual List("1.1", "2.2", "3.3", "4.4")
   }
 
+  "map" should "modify every element in a list" in {
+    Chapter3.map(List(1,2,3))(addOne) shouldEqual List(2,3,4)
+  }
+
+  def addOne(a: Int): Int = a + 1
   def isZero(a: Int): Boolean = a == 0
 }
