@@ -112,6 +112,11 @@ Int
   def map[A,B](as: List[A])(f: A => B): List[B] =
     foldRight(as, List[B]())((x,y) => Cons(f(x), y))
 
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, List[A]())((next, accList) =>
+      if(f(next)) Cons(next, accList) else accList )
+  }
+
 
   // TODO 3.7, 3.8, 3.13, 3.15
 

@@ -33,11 +33,11 @@ class Chapter3Spec extends FlatSpec with Matchers {
   }
 
   "setHead" should "Add an element to the first position" in {
-    Chapter3.setHead(4, List(1,2,3)) shouldEqual List(4,2,3)
+    Chapter3.setHead(4, List(1, 2, 3)) shouldEqual List(4, 2, 3)
   }
 
   "drop" should "removes the first n elements" in {
-    Chapter3.drop(List(1,2,3,4), 2) shouldEqual List(3,4)
+    Chapter3.drop(List(1, 2, 3, 4), 2) shouldEqual List(3, 4)
   }
 
   "drop" should "return Nil when the list is empty" in {
@@ -45,11 +45,11 @@ class Chapter3Spec extends FlatSpec with Matchers {
   }
 
   "drop" should "return the original list when nothing should be dropped" in {
-    Chapter3.drop(List(1,2, 3), 0) shouldEqual List(1,2,3)
+    Chapter3.drop(List(1, 2, 3), 0) shouldEqual List(1, 2, 3)
   }
 
   "dropWhile" should "remove elements as long as a pattern matches" in {
-    Chapter3.dropWhile(List(0, 0, 3, 0, 4))(isZero) shouldEqual List(3,0,4)
+    Chapter3.dropWhile(List(0, 0, 3, 0, 4))(isZero) shouldEqual List(3, 0, 4)
   }
 
   "dropWhile" should "return an empty list as a default case" in {
@@ -61,15 +61,15 @@ class Chapter3Spec extends FlatSpec with Matchers {
   }
 
   "length" should "return the length of a list" in {
-    Chapter3.lengthR(List(1,22,3,44,5,66)) shouldEqual 6
+    Chapter3.lengthR(List(1, 22, 3, 44, 5, 66)) shouldEqual 6
   }
 
   "foldLeft" should "return the sum of a list" in {
-    Chapter3.foldLeft(List(1,22,3,4,5), 0)(_ + _) shouldEqual 35
+    Chapter3.foldLeft(List(1, 22, 3, 4, 5), 0)(_ + _) shouldEqual 35
   }
 
   "sumL" should "return the sum of a list" in {
-    Chapter3.sumL(List(1,22,3,4,5)) shouldEqual 35
+    Chapter3.sumL(List(1, 22, 3, 4, 5)) shouldEqual 35
   }
 
   "prodL" should "return the product of" in {
@@ -93,9 +93,16 @@ class Chapter3Spec extends FlatSpec with Matchers {
   }
 
   "map" should "modify every element in a list" in {
-    Chapter3.map(List(1,2,3))(addOne) shouldEqual List(2,3,4)
+    Chapter3.map(List(1, 2, 3))(addOne) shouldEqual List(2, 3, 4)
+  }
+
+  "filter" should "filter a list based on a passed function" in {
+    Chapter3.filter(List(1, 2, 0, 0, 33))(notZero) shouldEqual List(1, 2, 33)
   }
 
   def addOne(a: Int): Int = a + 1
+
   def isZero(a: Int): Boolean = a == 0
+
+  def notZero(a: Int): Boolean = a != 0
 }
