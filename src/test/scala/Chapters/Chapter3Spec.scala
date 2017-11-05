@@ -28,6 +28,7 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.tail(List("Hello", "World")) shouldEqual List("World")
   }
 
+  // todo I guess tail should return Nil if you apply it to List(1), as Nil is the tail
   "tail" should "return the original List when there is no tail" in {
     Chapter3.tail(List(1)) shouldEqual List(1)
   }
@@ -38,6 +39,11 @@ class Chapter3Spec extends FlatSpec with Matchers {
 
   "drop" should "removes the first n elements" in {
     Chapter3.drop(List(1, 2, 3, 4), 2) shouldEqual List(3, 4)
+  }
+
+  // todo
+  "drop" should "removes the first element from a one element list" in {
+    Chapter3.drop(List(1), 1) shouldEqual Nil
   }
 
   "drop" should "return Nil when the list is empty" in {
