@@ -59,10 +59,9 @@ object Chapter3 {
   // TODO is there a better implementation
   def init[A](l: List[A]): List[A] = {
     def go(li: List[A], result: List[A]): List[A] = li match {
-      case Cons(x, xs) =>
-        if (tail(xs) == Nil) result
-        else go(xs, List.append(result, Cons(x, Nil)))
-      case Nil => List()
+      case Nil => Nil
+      case Cons(_, Nil) => result
+      case Cons(x, xs) => go(xs, List.append(result, List(x)))
     }
 
     go(l, List())
