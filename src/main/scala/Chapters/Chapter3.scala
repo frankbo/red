@@ -86,7 +86,7 @@ object Chapter3 {
     }
 
   def sumL(ns: List[Int]): Int = foldLeft(ns, 0)(_ + _)
-Int
+
   def prodL(ns: List[Double]): Double = foldLeft(ns, 1.0)(_ * _)
 
   def lengthL[A](ns: List[A]): Int = foldLeft(ns, 0)((x, _) => x + 1)
