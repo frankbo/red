@@ -100,6 +100,7 @@ object Chapter3 {
     case _ => foldLeft(reverse(l1), l2)((t, next) => Cons(next, t))
   }
 
+  // todo do with map maybe?
   def addOneToEveryElement(l: List[Int]): List[Int] =
     foldRight(l, List[Int]())((next, t) => Cons(next + 1, t))
 
