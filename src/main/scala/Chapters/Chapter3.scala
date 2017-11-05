@@ -27,15 +27,13 @@ object List {
 }
 
 object Chapter3 {
-  def patternMatch(l: List[Int]): Int = {
-    l match {
+  def patternMatch(l: List[Int]): Int = l match {
       case Cons(x, Cons(2, Cons(4, _))) => x
       case Nil => 42
       case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
       case Cons(h, t) => h + List.sum(t)
       case _ => 101
     }
-  }
 
   def tail[A](l: List[A]): List[A] = l match {
     case Cons(_, Nil) => l
