@@ -84,6 +84,10 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.appendWithFold(List(1, 2, 3), List(4, 5, 6)) shouldEqual List(1, 2, 3, 4, 5, 6)
   }
 
+  "flatten" should "flatten lists of lists to own list" in {
+    Chapter3.flatten(List(List(1, 2, 3), List(1, 2, 3))) shouldEqual List(1, 2, 3, 1, 2, 3)
+  }
+
   "addOneToEveryElement" should "add one on every element in the list" in {
     Chapter3.addOneToEveryElement(List(-1, -1, 6)) shouldEqual List(0, 0, 7)
   }
