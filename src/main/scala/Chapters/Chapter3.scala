@@ -99,8 +99,9 @@ object Chapter3 {
     case Nil => l2
     case _ => foldLeft(reverse(l1), l2)((t, next) => Cons(next, t))
   }
-
-  // todo do with map maybe?
+  def flatten[A](l: List[List[A]]): List[A] =
+    foldLeft(l, List[A]())((accList, next) => List.append(accList, next))
+// todo do with map maybe?
   def addOneToEveryElement(l: List[Int]): List[Int] =
     foldRight(l, List[Int]())((next, t) => Cons(next + 1, t))
 
@@ -110,12 +111,12 @@ object Chapter3 {
   def map[A,B](as: List[A])(f: A => B): List[B] =
     foldRight(as, List[B]())((x,y) => Cons(f(x), y))
 
-  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
     foldRight(as, List[A]())((next, accList) =>
       if(f(next)) Cons(next, accList) else accList )
-  }
 
 
-  // TODO 3.7, 3.8, 3.13, 3.15
+
+  // TODO 3.7, 3.8, 3.13
 
 }
