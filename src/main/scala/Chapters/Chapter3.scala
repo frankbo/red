@@ -36,7 +36,7 @@ object Chapter3 {
     }
 
   def tail[A](l: List[A]): List[A] = l match {
-    case Cons(_, Nil) => l
+    case Cons(_, Nil) => Nil
     case Cons(_, xs) => xs
     case _ => l
   }
@@ -56,7 +56,6 @@ object Chapter3 {
     case _ => l
   }
 
-  // TODO is there a better implementation
   def init[A](l: List[A]): List[A] = {
     def go(li: List[A], result: List[A]): List[A] = li match {
       case Nil => Nil
@@ -94,7 +93,6 @@ object Chapter3 {
   def reverse[A](l: List[A]): List[A] =
     foldLeft(l, List[A]())((accList, nextVal) => List.append(Cons(nextVal, Nil), accList))
 
-  // Todo is reverse the best way and is it performing best.
   def appendWithFold[A](l1: List[A], l2: List[A]): List[A] = l1 match {
     case Nil => l2
     case _ => foldLeft(reverse(l1), l2)((t, next) => Cons(next, t))
