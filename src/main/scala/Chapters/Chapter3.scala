@@ -113,6 +113,8 @@ object Chapter3 {
     foldRight(as, List[A]())((next, accList) =>
       if(f(next)) Cons(next, accList) else accList )
 
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = flatten(map(as)(f))
+
 
 
   // TODO 3.7, 3.8, 3.13
