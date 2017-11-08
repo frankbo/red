@@ -27,15 +27,13 @@ object List {
 }
 
 object Chapter3 {
-  def patternMatch(l: List[Int]): Int = {
-    l match {
+  def patternMatch(l: List[Int]): Int = l match {
       case Cons(x, Cons(2, Cons(4, _))) => x
       case Nil => 42
       case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
       case Cons(h, t) => h + List.sum(t)
       case _ => 101
     }
-  }
 
   def tail[A](l: List[A]): List[A] = l match {
     case Cons(_, Nil) => l
@@ -61,10 +59,9 @@ object Chapter3 {
   // TODO is there a better implementation
   def init[A](l: List[A]): List[A] = {
     def go(li: List[A], result: List[A]): List[A] = li match {
-      case Cons(x, xs) =>
-        if (tail(xs) == Nil) result
-        else go(xs, List.append(result, Cons(x, Nil)))
-      case Nil => List()
+      case Nil => Nil
+      case Cons(_, Nil) => result
+      case Cons(x, xs) => go(xs, List.append(result, List(x)))
     }
 
     go(l, List())
@@ -89,7 +86,7 @@ object Chapter3 {
     }
 
   def sumL(ns: List[Int]): Int = foldLeft(ns, 0)(_ + _)
-Int
+
   def prodL(ns: List[Double]): Double = foldLeft(ns, 1.0)(_ * _)
 
   def lengthL[A](ns: List[A]): Int = foldLeft(ns, 0)((x, _) => x + 1)
@@ -102,10 +99,9 @@ Int
     case Nil => l2
     case _ => foldLeft(reverse(l1), l2)((t, next) => Cons(next, t))
   }
-
   def flatten[A](l: List[List[A]]): List[A] =
     foldLeft(l, List[A]())((accList, next) => List.append(accList, next))
-
+// todo do with map maybe?
   def addOneToEveryElement(l: List[Int]): List[Int] =
     foldRight(l, List[Int]())((next, t) => Cons(next + 1, t))
 
