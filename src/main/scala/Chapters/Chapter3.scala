@@ -99,9 +99,9 @@ object Chapter3 {
   }
   def flatten[A](l: List[List[A]]): List[A] =
     foldLeft(l, List[A]())((accList, next) => List.append(accList, next))
-// todo do with map maybe?
+
   def addOneToEveryElement(l: List[Int]): List[Int] =
-    foldRight(l, List[Int]())((next, t) => Cons(next + 1, t))
+    map(l)((listElement) => listElement + 1)
 
   def doubleToString(l: List[Double]): List[String] =
     foldRight(l, List[String]())((next, t) => Cons(next.toString, t))
