@@ -118,6 +118,21 @@ object Chapter3 {
   def flatMapFilter[A](as: List[A])(f: A => Boolean): List[A] =
     flatMap(as)((x: A) => if(f(x)) Cons(x, List()) else List())
 
+  def zipWithInt(a: List[Int], b: List[Int]): List[Int] = {
+    def calc(a: List[Int], b: List[Int], acc: List[Int]): List[Int] = {
+      if (lengthL(a) == 0 || lengthL(b) == 0) {
+        List.append(List.append(acc, a), b)
+      } else {
+        calc(tail(a), tail(b), List.append(acc, Cons( head(a) + head(b), List())))
+      }
+    }
+
+    calc(a, b, List())
+  }
+
+  def head[A](as: List[A]): A = as match {
+    case Cons(x, _) => x
+  }
 
 
   // TODO 3.7, 3.8, 3.13

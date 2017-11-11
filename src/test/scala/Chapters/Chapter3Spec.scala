@@ -116,6 +116,12 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.flatMapFilter(List(1, 2, 0, 0, 3))(notZero) shouldEqual List(1, 2, 3)
   }
 
+  "zipWithInt" should "combine two list through addition" in {
+    Chapter3.zipWithInt(List(1, 2, 3), List(1, 2, 3)) shouldEqual List(2, 4, 6)
+    Chapter3.zipWithInt(List(1, 2, 3), List(1, 2, 3, 22)) shouldEqual List(2, 4, 6, 22)
+    Chapter3.zipWithInt(List(1, 2, 3, 35), List(1, 2, 3)) shouldEqual List(2, 4, 6, 35)
+  }
+
   def addOne(a: Int): Int = a + 1
 
   def isZero(a: Int): Boolean = a == 0
