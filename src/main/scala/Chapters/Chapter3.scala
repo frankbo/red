@@ -115,6 +115,9 @@ object Chapter3 {
 
   def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = flatten(map(as)(f))
 
+  def flatMapFilter[A](as: List[A])(f: A => Boolean): List[A] =
+    flatMap(as)((x: A) => if(f(x)) Cons(x, List()) else List())
+
 
 
   // TODO 3.7, 3.8, 3.13

@@ -109,7 +109,11 @@ class Chapter3Spec extends FlatSpec with Matchers {
   }
 
   "flatMap" should "flatten and map a list of elements" in {
-    Chapter3.flatMap(List(1,2,3))(i => List(i,i)) shouldEqual List(1,1,2,2,3,3)
+    Chapter3.flatMap(List(1, 2, 3))(i => List(i, i)) shouldEqual List(1, 1, 2, 2, 3, 3)
+  }
+
+  "flatMapFilter" should "filter a list based on callback function" in {
+    Chapter3.flatMapFilter(List(1, 2, 0, 0, 3))(notZero) shouldEqual List(1, 2, 3)
   }
 
   def addOne(a: Int): Int = a + 1
