@@ -118,8 +118,8 @@ class Chapter3Spec extends FlatSpec with Matchers {
 
   "zipWith" should "combine two list through addition" in {
     Chapter3.zipWith(List(1, 2, 3), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6)
-    Chapter3.zipWith(List(1, 2, 3), List(1, 2, 3, 22), addElements) shouldEqual List(2, 4, 6, 22)
-    Chapter3.zipWith(List(1, 2, 3, 35), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6, 35)
+    Chapter3.zipWith(List(1, 2, 3), List(1, 2, 3, 22), addElements) shouldEqual List(2, 4, 6)
+    Chapter3.zipWith(List(1, 2, 3, 35), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6)
   }
 
   def addElements(a: Int)(b: Int): Int = a + b

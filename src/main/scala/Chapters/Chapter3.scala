@@ -118,18 +118,11 @@ object Chapter3 {
   def flatMapFilter[A](as: List[A])(f: A => Boolean): List[A] =
     flatMap(as)((x: A) => if(f(x)) Cons(x, List()) else List())
 
-  // TODO find a better solution
   def zipWith[A](a: List[A], b: List[A], f: A => A => A): List[A] = {
-    def calc(a: List[A], b: List[A], acc: List[A]): List[A] = {
-      if (lengthL(a) == 0 || lengthL(b) == 0) {
-        List.append(List.append(acc, a), b)
-      } else {
-        calc(tail(a), tail(b), List.append(acc, Cons( f(head(a))(head(b)), List())))
-      }
-    }
-    
-    def head[A](as: List[A]): A = as match {
-      case Cons(x, _) => x
+    def calc(l1: List[A], l2: List[A], acc: List[A]): List[A] = (l1, l2) match {
+      case (_, Nil) => acc
+      case (Nil, _) => acc
+      case (Cons(x, xs), Cons(y, ys)) => calc(xs, ys, List.append(acc, Cons(f(x)(y), List())))
     }
 
     calc(a, b, List())
