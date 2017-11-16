@@ -56,14 +56,10 @@ object Chapter3 {
     case _ => l
   }
 
-  def init[A](l: List[A]): List[A] = {
-    def go(li: List[A], result: List[A]): List[A] = li match {
+  def init[A](l: List[A]): List[A] =  l match {
       case Nil => Nil
-      case Cons(_, Nil) => result
-      case Cons(x, xs) => go(xs, List.append(result, List(x)))
-    }
-
-    go(l, List())
+      case Cons(_, Nil) => Nil
+      case Cons(x, xs) => Cons(x, init(xs))
   }
 
   def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B =
@@ -91,7 +87,7 @@ object Chapter3 {
   def lengthL[A](ns: List[A]): Int = foldLeft(ns, 0)((x, _) => x + 1)
 
   def reverse[A](l: List[A]): List[A] =
-    foldLeft(l, List[A]())((accList, nextVal) => List.append(Cons(nextVal, Nil), accList))
+    foldLeft(l, List[A]())((accList, nextVal) => Cons(nextVal, accList))
 
   def appendWithFold[A](l1: List[A], l2: List[A]): List[A] = l1 match {
     case Nil => l2
