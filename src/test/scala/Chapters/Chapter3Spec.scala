@@ -122,7 +122,7 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.zipWith(List(1, 2, 3, 35), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6)
   }
 
-  def addElements(a: Int)(b: Int): Int = a + b
+  def addElements(t: (Int, Int)): Int = t._1 + t._2
 
   def addOne(a: Int): Int = a + 1
 

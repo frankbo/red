@@ -114,14 +114,15 @@ object Chapter3 {
   def flatMapFilter[A](as: List[A])(f: A => Boolean): List[A] =
     flatMap(as)((x: A) => if(f(x)) Cons(x, List()) else List())
 
-  def zipWith[A](a: List[A], b: List[A], f: A => A => A): List[A] = {
-    def calc(l1: List[A], l2: List[A], acc: List[A]): List[A] = (l1, l2) match {
+  def zipWith[A](a: List[A], b: List[A], f: ((A, A)) => A): List[A] = {
+    def calc(l1: List[A], l2: List[A], acc: List[(A, A)]): List[(A, A)] = (l1, l2) match {
       case (_, Nil) => acc
       case (Nil, _) => acc
-      case (Cons(x, xs), Cons(y, ys)) => calc(xs, ys, List.append(acc, Cons(f(x)(y), List())))
+      case (Cons(x, xs), Cons(y, ys)) => calc(xs, ys, List.append(acc, Cons((x, y), List())))
     }
 
-    calc(a, b, List())
+    val tupleList = calc(a, b, List())
+    map(tupleList)(f)
   }
 
 
