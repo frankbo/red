@@ -122,6 +122,29 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.zipWith(List(1, 2, 3, 35), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6)
   }
 
+  // Tests for Trees
+
+  "size" should "return the number of nodes (leaves, branches)" in {
+    val tree = Branch(Leaf("a"), Leaf("b"))
+    Chapter3.treeSize(tree) shouldEqual 3
+  }
+
+  "max" should "return the highest Int value of the leaves" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Leaf(7))
+    Chapter3.treeMax(tree) shouldEqual 22
+  }
+
+  "depth" should "return the path length from root" in {
+    val tree = Branch(
+      Leaf(1),
+      Branch(
+        Leaf(1),
+        Branch(Leaf(1),
+          Branch(Leaf(1), Leaf(1))))
+    )
+    Chapter3.treeDepth(tree, 0) shouldEqual 5
+  }
+
   def addElements(t: (Int, Int)): Int = t._1 + t._2
 
   def addOne(a: Int): Int = a + 1

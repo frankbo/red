@@ -4,6 +4,10 @@ sealed trait List[+A]
 case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
+sealed trait Tree[+A]
+case class Leaf[A](value: A) extends Tree[A]
+case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
+
 object List {
   def sum(ints: List[Int]): Int = ints match {
     case Nil => 0
@@ -125,7 +129,21 @@ object Chapter3 {
     map(tupleList)(f)
   }
 
+  def treeSize[A](tree: Tree[A]): Int = tree match {
+    case Branch(l, r) => 1 + treeSize(l) + treeSize(r)
+    case Leaf(_) => 1
+  }
 
-  // TODO 3.7, 3.8, 3.13
+  def treeMax(tree: Tree[Int]): Int = tree match {
+    case Branch(l, r) => treeMax(l) max treeMax(r)
+    case Leaf(v) => v
+  }
+
+  def treeDepth[A](tree: Tree[A], depth: Int): Int = tree match {
+    case Branch(l, r) => treeDepth(l, depth + 1) max treeDepth(r, depth + 1)
+    case Leaf(_) => depth + 1
+  }
+
+  // TODO 3.7, 3.8, 3.13, 3.24
 
 }
