@@ -145,13 +145,10 @@ object Chapter3 {
   }
 
   def treeMap[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
-    case Branch(Leaf(l), Leaf(r)) => Branch(Leaf(f(l)), Leaf(f(r)))
-    case Branch(Leaf(l), b) => Branch(Leaf(f(l)), treeMap(b)(f))
-    case Branch(b, Leaf(r)) => Branch(treeMap(b)(f), Leaf(f(r)))
     case Branch(b1, b2) => Branch(treeMap(b1)(f), treeMap(b2)(f))
     case Leaf(a) => Leaf(f(a))
   }
 
-  // TODO 3.7, 3.8, 3.13, 3.24
+    // TODO 3.7, 3.8, 3.13, 3.24
 
 }
