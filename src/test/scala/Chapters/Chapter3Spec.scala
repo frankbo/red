@@ -145,6 +145,12 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.treeDepth(tree, 0) shouldEqual 5
   }
 
+  "map" should "change every leave based on the passed in function" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Branch(Leaf(7), Leaf(21)))
+    val expectedTree = Branch(Branch(Leaf(5), Leaf(23)), Branch(Leaf(8), Leaf(22)))
+    Chapter3.treeMap(tree)(addOne) shouldEqual expectedTree
+  }
+
   def addElements(t: (Int, Int)): Int = t._1 + t._2
 
   def addOne(a: Int): Int = a + 1
