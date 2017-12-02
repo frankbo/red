@@ -151,6 +151,32 @@ class Chapter3Spec extends FlatSpec with Matchers {
     Chapter3.treeMap(tree)(addOne) shouldEqual expectedTree
   }
 
+  "fold" should "count every element in the tree" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Leaf(7))
+    Chapter3.treeFold(tree)((_) => 1)((b1: Int, b2: Int) => 1 + b1 + b2) shouldEqual 5
+  }
+
+  "treeFoldCount" should "count every element in the tree" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Leaf(7))
+    Chapter3.treeFoldCount(tree) shouldEqual 5
+  }
+
+  "treeFoldMax" should "count every element in the tree" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Leaf(7))
+    Chapter3.treeFoldMax(tree) shouldEqual 22
+  }
+
+  "treeFoldDepth" should "be the max depth of a tree" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Leaf(7))
+    Chapter3.treeFoldDepth(tree) shouldEqual 3
+  }
+
+  "treeFoldMap" should "be the max depth of a tree" in {
+    val tree = Branch(Branch(Leaf(4), Leaf(22)), Branch(Leaf(7), Leaf(21)))
+    val expectedTree = Branch(Branch(Leaf(5), Leaf(23)), Branch(Leaf(8), Leaf(22)))
+    Chapter3.treeFoldMap(tree)(addOne) shouldEqual expectedTree
+  }
+
   def addElements(t: (Int, Int)): Int = t._1 + t._2
 
   def addOne(a: Int): Int = a + 1

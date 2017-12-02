@@ -149,6 +149,25 @@ object Chapter3 {
     case Leaf(a) => Leaf(f(a))
   }
 
+  // Tree fold
+
+  def treeFold[A, B](tree: Tree[A])(lf: A => B)(bf: (B, B) => B): B = tree match {
+    case Branch(l, r) => bf(treeFold(l)(lf)(bf), treeFold(r)(lf)(bf))
+    case Leaf(a) => lf(a)
+  }
+
+  def treeFoldCount[A](tree: Tree[A]): Int =
+    treeFold(tree)((_) => 1)((b1, b2)=> 1 + b1 + b2)
+
+  def treeFoldMax(tree: Tree[Int]): Int =
+    treeFold(tree)(identity)((b1, b2)=> b1 max b2)
+
+  def treeFoldDepth[A](tree: Tree[A]): Int =
+    treeFold(tree)(_ => 1)((b1, b2)=> 1 + (b1 max b2))
+
+  def treeFoldMap[A, B](tree: Tree[A])(f: A => B): Tree[B] =
+    treeFold(tree)(v => Leaf(f(v)): Tree[B])((l, r) => Branch(l, r): Tree[B])
+
     // TODO 3.7, 3.8, 3.13, 3.24
 
 }
