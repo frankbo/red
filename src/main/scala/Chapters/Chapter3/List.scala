@@ -1,12 +1,10 @@
-package Chapters
+package Chapters.Chapter3
 
 sealed trait List[+A]
-case object Nil extends List[Nothing]
-case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
-sealed trait Tree[+A]
-case class Leaf[A](value: A) extends Tree[A]
-case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
+case object Nil extends List[Nothing]
+
+case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
 object List {
   def sum(ints: List[Int]): Int = ints match {
@@ -22,22 +20,20 @@ object List {
   def append[A](a1: List[A], a2: List[A]): List[A] =
     a1 match {
       case Nil => a2
-      case Cons(h,t) => Cons(h, append(t, a2))
+      case Cons(h, t) => Cons(h, append(t, a2))
     }
 
   def apply[A](as: A*): List[A] =
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
-}
 
-object Chapter3 {
   def patternMatch(l: List[Int]): Int = l match {
-      case Cons(x, Cons(2, Cons(4, _))) => x
-      case Nil => 42
-      case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
-      case Cons(h, t) => h + List.sum(t)
-      case _ => 101
-    }
+    case Cons(x, Cons(2, Cons(4, _))) => x
+    case Nil => 42
+    case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
+    case Cons(h, t) => h + List.sum(t)
+    case _ => 101
+  }
 
   def tail[A](l: List[A]): List[A] = l match {
     case Cons(_, Nil) => Nil
@@ -60,13 +56,13 @@ object Chapter3 {
     case _ => l
   }
 
-  def init[A](l: List[A]): List[A] =  l match {
-      case Nil => Nil
-      case Cons(_, Nil) => Nil
-      case Cons(x, xs) => Cons(x, init(xs))
+  def init[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(_, Nil) => Nil
+    case Cons(x, xs) => Cons(x, init(xs))
   }
 
-  def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B =
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B =
     as match {
       case Nil => z
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
@@ -78,7 +74,7 @@ object Chapter3 {
 
   def productR(ns: List[Double]): Double = foldRight(ns, 1.0)(_ * _)
 
-  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B =
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B =
     as match {
       case Nil => z
       case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
@@ -97,6 +93,7 @@ object Chapter3 {
     case Nil => l2
     case _ => foldLeft(reverse(l1), l2)((t, next) => Cons(next, t))
   }
+
   def flatten[A](l: List[List[A]]): List[A] =
     foldLeft(l, List[A]())((accList, next) => List.append(accList, next))
 
@@ -106,17 +103,17 @@ object Chapter3 {
   def doubleToString(l: List[Double]): List[String] =
     foldRight(l, List[String]())((next, t) => Cons(next.toString, t))
 
-  def map[A,B](as: List[A])(f: A => B): List[B] =
-    foldRight(as, List[B]())((x,y) => Cons(f(x), y))
+  def map[A, B](as: List[A])(f: A => B): List[B] =
+    foldRight(as, List[B]())((x, y) => Cons(f(x), y))
 
   def filter[A](as: List[A])(f: A => Boolean): List[A] =
     foldRight(as, List[A]())((next, accList) =>
-      if(f(next)) Cons(next, accList) else accList )
+      if (f(next)) Cons(next, accList) else accList)
 
-  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = flatten(map(as)(f))
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = flatten(map(as)(f))
 
   def flatMapFilter[A](as: List[A])(f: A => Boolean): List[A] =
-    flatMap(as)((x: A) => if(f(x)) Cons(x, List()) else List())
+    flatMap(as)((x: A) => if (f(x)) Cons(x, List()) else List())
 
   def zipWith[A](a: List[A], b: List[A], f: ((A, A)) => A): List[A] = {
     def calc(l1: List[A], l2: List[A], acc: List[(A, A)]): List[(A, A)] = (l1, l2) match {
@@ -129,45 +126,5 @@ object Chapter3 {
     map(tupleList)(f)
   }
 
-  def treeSize[A](tree: Tree[A]): Int = tree match {
-    case Branch(l, r) => 1 + treeSize(l) + treeSize(r)
-    case Leaf(_) => 1
-  }
-
-  def treeMax(tree: Tree[Int]): Int = tree match {
-    case Branch(l, r) => treeMax(l) max treeMax(r)
-    case Leaf(v) => v
-  }
-
-  def treeDepth[A](tree: Tree[A], depth: Int): Int = tree match {
-    case Branch(l, r) => treeDepth(l, depth + 1) max treeDepth(r, depth + 1)
-    case Leaf(_) => depth + 1
-  }
-
-  def treeMap[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
-    case Branch(b1, b2) => Branch(treeMap(b1)(f), treeMap(b2)(f))
-    case Leaf(a) => Leaf(f(a))
-  }
-
-  // Tree fold
-
-  def treeFold[A, B](tree: Tree[A])(lf: A => B)(bf: (B, B) => B): B = tree match {
-    case Branch(l, r) => bf(treeFold(l)(lf)(bf), treeFold(r)(lf)(bf))
-    case Leaf(a) => lf(a)
-  }
-
-  def treeFoldCount[A](tree: Tree[A]): Int =
-    treeFold(tree)((_) => 1)((b1, b2)=> 1 + b1 + b2)
-
-  def treeFoldMax(tree: Tree[Int]): Int =
-    treeFold(tree)(identity)((b1, b2)=> b1 max b2)
-
-  def treeFoldDepth[A](tree: Tree[A]): Int =
-    treeFold(tree)(_ => 1)((b1, b2)=> 1 + (b1 max b2))
-
-  def treeFoldMap[A, B](tree: Tree[A])(f: A => B): Tree[B] =
-    treeFold(tree)(v => Leaf(f(v)): Tree[B])((l, r) => Branch(l, r): Tree[B])
-
-    // TODO 3.7, 3.8, 3.13, 3.24
-
+  // TODO 3.7, 3.8, 3.13, 3.24
 }

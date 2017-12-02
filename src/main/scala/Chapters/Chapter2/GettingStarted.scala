@@ -1,6 +1,6 @@
-package Chapters
+package Chapters.Chapter2
 
-object Chapter2 {
+object GettingStarted {
   def fibonacci(first: Int, second: Int, n: Int): Int = {
     val withOutFirstTwoInputs = n - 2
     if (withOutFirstTwoInputs <= 0) {
