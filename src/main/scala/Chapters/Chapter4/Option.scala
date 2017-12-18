@@ -33,9 +33,9 @@ object Option {
   }
 
   def variance(xs: Seq[Double]): Option[Double] = {
-    val avg = if (xs.isEmpty) None else Some(xs.sum / xs.length)
-    val numerator = flatMap(Some(xs))(l => map(avg)(v => l.foldLeft(0.0)((acc, x) => acc + math.pow(x - v, 2.0))))
+    def avg(l: Seq[Double]) =
+      if (l.isEmpty) None else Some(l.sum / l.length)
 
-    map(numerator)(v => v / xs.length)
+    flatMap(avg(xs))(x => avg(xs.map(v => math.pow(x - v, 2.0))))
   }
 }
