@@ -46,4 +46,12 @@ class OptionTest extends FlatSpec with Matchers {
   it should "return None when None was passed" in {
     Option.filter[Int, Int](None)(_ > 2) shouldEqual None
   }
+
+  "variance" should "return the variance of given sequence" in {
+    Option.variance(Seq(8.0, 7.0, 9.0, 10.0, 6.0)) shouldEqual Some(2)
+  }
+
+  it should "return None for an empty Sequence" in {
+    Option.variance(Seq()) shouldEqual None
+  }
 }
