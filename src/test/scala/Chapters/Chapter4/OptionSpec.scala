@@ -54,4 +54,14 @@ class OptionTest extends FlatSpec with Matchers {
   it should "return None for an empty Sequence" in {
     Option.variance(Seq()) shouldEqual None
   }
+
+  "map2" should "return an Some value when 2 params were passed to a function" in {
+    Option.map2(Some(2), Some(2))((a: Int, b: Int) => a + b) shouldEqual Some(4)
+  }
+
+  it should "return None when one of both parameters is None" in {
+    Option.map2(Some(2), None)((a, b) => a + b) shouldEqual None
+    Option.map2(None, Some(2))((a: Int, b: Int) => a + b) shouldEqual None
+    Option.map2(None, None)((a: Int, b: Int) => a + b) shouldEqual None
+  }
 }
