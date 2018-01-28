@@ -44,9 +44,9 @@ object Option {
     case _ => None
   }
 
-  def sequence[A](l: List[Option[A]]): Option[List[A]] =
-    if (l.contains(None)) None
-    else Some(l.map {
-      case Some(a) => a
-    })
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    a match {
+      case Nil => Some(Nil)
+      case h :: t => flatMap(h)(hh => map(sequence(t))(hh :: _))
+    }
 }
