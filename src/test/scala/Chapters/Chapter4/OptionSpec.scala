@@ -64,4 +64,12 @@ class OptionTest extends FlatSpec with Matchers {
     Option.map2(None, Some(2))((a: Int, b: Int) => a + b) shouldEqual None
     Option.map2(None, None)((a: Int, b: Int) => a + b) shouldEqual None
   }
+
+  "sequence" should "return an Some with a list included" in {
+    Option.sequence(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
+  }
+
+  it should "return None when one of the element is Nonen" in {
+    Option.sequence(List(Some(1), None, Some(3))) shouldEqual None
+  }
 }

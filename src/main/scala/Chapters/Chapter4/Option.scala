@@ -43,4 +43,10 @@ object Option {
     case (Some(x), Some(y)) => Some(f(x, y))
     case _ => None
   }
+
+  def sequence[A](l: List[Option[A]]): Option[List[A]] =
+    if (l.contains(None)) None
+    else Some(l.map {
+      case Some(a) => a
+    })
 }
