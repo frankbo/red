@@ -77,12 +77,12 @@ class OptionTest extends FlatSpec with Matchers {
     Option.sequence(List()) shouldEqual Some(Nil)
   }
 
-  "traverse" should "swap List and Option type + runs a function on every element" in {
-    Option.traverse(List(Some(1), Some(2), Some(3)))(v => Some(v + 1)) shouldEqual Some(List(2, 3, 4))
+  "traverse" should "Runs a function on every element and returns Some when successful" in {
+    Option.traverse(List(1, 2, 3))(v => Some(v + 1)) shouldEqual Some(List(2, 3, 4))
   }
 
   it should "return None when one of the elements is None" in {
-    Option.traverse(List(Some(1), None, Some(3)))(v => Some(v + 1)) shouldEqual None
+    Option.traverse(List(1, 2, 3))(v => None) shouldEqual None
   }
 
   it should "return Some Nil when the list is empty" in {
