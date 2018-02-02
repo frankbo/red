@@ -41,4 +41,24 @@ class EitherTest extends FlatSpec with Matchers {
   it should "return the error of the second Either when the current element is correct" in {
     Right(22).map2(Left("Some error"))((_, _) => 1 + 2) shouldEqual Left("Some error")
   }
+
+  "sequence" should "return right with a list included" in {
+    Either.sequence(List(Right(1), Right(2), Right(3))) shouldEqual Right(List(1, 2, 3))
+  }
+
+  it should "fail at the first error" in {
+    Either.sequence(List(Left("Nooo"), Right(2), Left("Bad things will happen here"))) shouldEqual Left("Nooo")
+  }
+
+  "traverse" should "Runs a function on every element and returns right if everything went fine" in {
+    Either.traverse(List(1, 2, 3))(v => Right(v + 1)) shouldEqual Right(List(2, 3, 4))
+  }
+
+  it should "return Left with an error message, when one of the elements is None" in {
+    Either.traverse(List(1, 2, 3))(_ => Left("Some error")) shouldEqual Left("Some error")
+  }
+
+  it should "return Right Nil when the list is empty" in {
+    Either.sequence(List()) shouldEqual Right(Nil)
+  }
 }
