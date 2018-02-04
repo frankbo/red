@@ -40,3 +40,9 @@ object Either {
   }
 }
 
+/* 4.8
+Collecting errors in a list might be the best solution
+Either[List[E], B]
+ */
+
+
