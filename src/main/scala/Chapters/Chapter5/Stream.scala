@@ -16,7 +16,7 @@ case object Empty extends Stream[Nothing] {
 }
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A] {
   override def toList = h() :: t().toList
-  override def take(n: Int) = ???
+  override def take(n: Int) = if (n == 0) Stream(h()) else Cons(h, () => t().take(n - 1))
   override def drop(n: Int) = if (n == 0) t() else t().drop(n - 1)
 }
 
