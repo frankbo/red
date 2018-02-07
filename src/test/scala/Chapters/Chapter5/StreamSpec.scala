@@ -24,6 +24,14 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   it should "return the remaining stream when the n elements are dropped" in {
-    Stream(1, 2, 3, 4).drop(1).toList shouldEqual Stream(3, 4).toList // Why is toList relevant here?
+    Stream(1, 2, 3, 4).drop(1).toList shouldEqual Stream(2, 3, 4).toList // Why is toList relevant here?
+  }
+
+  "takeWhile" should "return values until functional call is truthy" in {
+    Stream(1, 2, 3, 4, 5).takeWhile(v => v < 4).toList shouldEqual Stream(1, 2, 3).toList
+  }
+
+  it should "return an empty stream when the list is empty" in {
+    Stream().takeWhile(_ => true) shouldEqual Stream()
   }
 }
