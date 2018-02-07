@@ -18,13 +18,9 @@ case object Empty extends Stream[Nothing] {
 }
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A] {
   override def toList = h() :: t().toList
-  override def take(n: Int) = if (n == 0) Stream(h()) else Cons(h, () => t().take(n - 1))
+  override def take(n: Int) = if (n == 0) Empty else Cons(h, () => t().take(n - 1))
   override def drop(n: Int) = if (n == 1) t() else t().drop(n - 1)
-  override def takeWhile(p: A => Boolean) = {
-    val nextHead = t().headOption.map(p)
-    if (p(h()) && nextHead.contains(true)) Cons(h, () => t().takeWhile(p))
-    else Stream(h())
-  }
+  override def takeWhile(p: A => Boolean) = if (p(h())) Cons(h, () => t().takeWhile(p)) else Empty
 }
 
 object Stream {
