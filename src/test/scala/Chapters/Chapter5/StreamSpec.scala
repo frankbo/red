@@ -23,8 +23,12 @@ class StreamTest extends FlatSpec with Matchers {
     Stream().drop(1) shouldEqual Stream()
   }
 
+  it should "return the whole Stream when 0 elements should be dropped" in {
+    Stream(1, 2, 3, 4).drop(0).toList shouldEqual Stream(1, 2, 3, 4).toList
+  }
+
   it should "return the remaining stream when the n elements are dropped" in {
-    Stream(1, 2, 3, 4).drop(1).toList shouldEqual Stream(2, 3, 4).toList // Why is toList relevant here?
+    Stream(1, 2, 3, 4).drop(1).toList shouldEqual Stream(2, 3, 4).toList
   }
 
   "takeWhile" should "return values until functional call is truthy" in {
