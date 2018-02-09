@@ -38,4 +38,12 @@ class StreamTest extends FlatSpec with Matchers {
   it should "return an empty stream when the list is empty" in {
     Stream().takeWhile(_ => true) shouldEqual Stream()
   }
+
+  "forAll" should "if all elements in a Stream match a function" in {
+    Stream(1, 2, 3, 4).forAll((v) => v < 5) shouldEqual true
+  }
+
+  it should "return false when NOT all elements match a given function" in {
+    Stream(1, 2, 3, 4).forAll((v) => v < 2 ) shouldEqual false
+  }
 }

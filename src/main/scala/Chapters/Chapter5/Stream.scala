@@ -9,13 +9,21 @@ sealed trait Stream[+A] {
     case Empty => None
     case Cons(h, _) => Some(h())
   }
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h,t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+  def forAll(p: A => Boolean): Boolean =
+    foldRight(true)((next, prev) => p(next) && prev)
 }
+
 case object Empty extends Stream[Nothing] {
   override def toList = List()
   override def take(n: Int) = Stream()
   override def drop(n: Int) = Stream()
   override def takeWhile(p: Nothing => Boolean) = Stream()
 }
+
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A] {
   override def toList = h() :: t().toList
   override def take(n: Int) = if (n == 0) Empty else Cons(h, () => t().take(n - 1))
