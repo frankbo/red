@@ -16,7 +16,7 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   it should "return the first n elements from the stream" in {
-    Stream(1,2,3,4,5,6).take(2).toList shouldEqual Stream(1,2).toList
+    Stream(1, 2, 3, 4, 5, 6).take(2).toList shouldEqual Stream(1, 2).toList
   }
 
   "drop" should "return an empty stream when there is nothing to drop" in {
@@ -44,6 +44,6 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   it should "return false when NOT all elements match a given function" in {
-    Stream(1, 2, 3, 4).forAll((v) => v < 2 ) shouldEqual false
+    Stream(1, 2, 3, 4).forAll((v) => v < 2) shouldEqual false
   }
 }
