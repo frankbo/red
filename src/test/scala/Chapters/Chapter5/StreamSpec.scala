@@ -46,4 +46,8 @@ class StreamTest extends FlatSpec with Matchers {
   it should "return false when NOT all elements match a given function" in {
     Stream(1, 2, 3, 4).forAll((v) => v < 2) shouldEqual false
   }
+
+  "taleWhile2" should "take elements from a stream as long as the passed function is truthy" in {
+    Stream(1, 2, 3, 4).takeWhile2((v) => v <= 2).toList shouldEqual Stream(1, 2).toList
+  }
 }
