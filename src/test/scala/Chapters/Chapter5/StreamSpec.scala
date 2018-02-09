@@ -62,4 +62,12 @@ class StreamTest extends FlatSpec with Matchers {
   "map" should "call a function on every element on the stream lazy" in {
     Stream(1, 2, 3).map(v => v + 1).toList shouldEqual Stream(2, 3, 4).toList
   }
+
+  "filter" should "only return the values that match the function that filters" in {
+    Stream(1, 2, 3).filter(v => v % 2 == 1).toList shouldEqual Stream(1, 3).toList
+  }
+
+  it should "return an empty list when no element are filtered out" in {
+    Stream(1, 2, 3).filter(v => v > 6).toList shouldEqual Empty.toList
+  }
 }
