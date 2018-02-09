@@ -50,4 +50,12 @@ class StreamTest extends FlatSpec with Matchers {
   "taleWhile2" should "take elements from a stream as long as the passed function is truthy" in {
     Stream(1, 2, 3, 4).takeWhile2((v) => v <= 2).toList shouldEqual Stream(1, 2).toList
   }
+
+  "headOption2" should "return the head wrapped in a Some when available" in {
+    Stream(1, 2, 3).headOption2 shouldEqual Some(1)
+  }
+
+  it should "return None when no head is available" in {
+    Empty.headOption2 shouldEqual None
+  }
 }
