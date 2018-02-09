@@ -58,4 +58,8 @@ class StreamTest extends FlatSpec with Matchers {
   it should "return None when no head is available" in {
     Empty.headOption2 shouldEqual None
   }
+
+  "map" should "call a function on every element on the stream lazy" in {
+    Stream(1, 2, 3).map(v => v + 1).toList shouldEqual Stream(2, 3, 4).toList
+  }
 }
