@@ -74,4 +74,8 @@ class StreamTest extends FlatSpec with Matchers {
   "append" should "combine two Streams to one" in {
     Stream.append(Stream(1, 2, 3), Stream(4, 5, 6)).toList shouldEqual Stream(1, 2, 3, 4, 5, 6).toList
   }
+
+  "flatMap" should "go over every element in a stream a call a function + flatten the otucome" in {
+    Stream(1, 2, 3).flatMap(v => Stream.cons(v + 1, Stream.empty)).toList shouldEqual Stream(2, 3, 4).toList
+  }
 }
