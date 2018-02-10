@@ -68,6 +68,9 @@ object Stream {
     Cons(() => head, () => tail)
   }
 
+  def append[A](s1: => Stream[A], s2: => Stream[A]): Stream[A] =
+    s1.foldRight(s2)((h, t) => cons(h, t))
+
   def empty[A]: Stream[A] = Empty
 
   def apply[A](as: A*): Stream[A] =

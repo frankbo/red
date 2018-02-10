@@ -70,4 +70,8 @@ class StreamTest extends FlatSpec with Matchers {
   it should "return an empty list when no element are filtered out" in {
     Stream(1, 2, 3).filter(v => v > 6).toList shouldEqual Empty.toList
   }
+
+  "append" should "combine two Streams to one" in {
+    Stream.append(Stream(1, 2, 3), Stream(4, 5, 6)).toList shouldEqual Stream(1, 2, 3, 4, 5, 6).toList
+  }
 }
