@@ -86,4 +86,8 @@ class StreamTest extends FlatSpec with Matchers {
   "from" should "start from a given value and counts infinite time + 1" in {
     Stream.from(2).take(3).toList shouldEqual Stream(2, 3, 4).toList
   }
+
+  "fibs" should "calculate an infinite fibonacci series" in {
+    Stream.fibs().take(7).toList shouldEqual Stream(0, 1, 1, 2, 3, 5, 8).toList
+  }
 }

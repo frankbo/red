@@ -78,6 +78,15 @@ object Stream {
 
   def from(n: Int): Stream[Int] = cons(n, from(n + 1))
 
+  def fibs(): Stream[Int] = {
+    def go(v1:Int, v2: Int): Stream[Int] = {
+      val next = v1 + v2
+      cons(v1, cons(v2, go(next, next + v2)))
+    }
+
+    go(0, 1)
+  }
+
   def empty[A]: Stream[A] = Empty
 
   def apply[A](as: A*): Stream[A] =
