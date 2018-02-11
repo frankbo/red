@@ -98,4 +98,8 @@ class StreamTest extends FlatSpec with Matchers {
   "from2" should "start from a given value and counts infinite time + 1" in {
     Stream.from2(4).take(5).toList shouldEqual Stream(4, 5, 6, 7, 8).toList
   }
+
+  "constant2" should "create an endless amount of some given value" in {
+    Stream.constant2(33).take(4).toList shouldEqual Stream(33, 33, 33, 33).toList
+  }
 }
