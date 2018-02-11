@@ -81,7 +81,7 @@ object Stream {
   def from2(n: Int): Stream[Int] = unfold(n)((v) => Some(v, v + 1))
 
   def fibs(): Stream[Int] = {
-    def go(v1:Int, v2: Int): Stream[Int] = {
+    def go(v1: Int, v2: Int): Stream[Int] = {
       val next = v1 + v2
       cons(v1, cons(v2, go(next, next + v2)))
     }
