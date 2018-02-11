@@ -94,4 +94,8 @@ class StreamTest extends FlatSpec with Matchers {
   "unfold" should "create the next value and the next state for a stream" in {
     Stream.unfold(4)((v) => Some(v, v + 1)).take(5).toList shouldEqual Stream(4, 5, 6, 7, 8).toList
   }
+
+  "from2" should "start from a given value and counts infinite time + 1" in {
+    Stream.from2(4).take(5).toList shouldEqual Stream(4, 5, 6, 7, 8).toList
+  }
 }
