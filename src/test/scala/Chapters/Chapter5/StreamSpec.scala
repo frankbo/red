@@ -102,4 +102,8 @@ class StreamTest extends FlatSpec with Matchers {
   "constant2" should "create an endless amount of some given value" in {
     Stream.constant2(33).take(4).toList shouldEqual Stream(33, 33, 33, 33).toList
   }
+
+  "ones2" should "return an infinate amount of the value 1" in {
+    Stream.ones2.take(5).toList shouldEqual Stream(1, 1, 1, 1, 1).toList
+  }
 }
