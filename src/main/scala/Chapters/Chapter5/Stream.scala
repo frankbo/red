@@ -74,6 +74,8 @@ object Stream {
   def append[A](s1: => Stream[A], s2: => Stream[A]): Stream[A] =
     s1.foldRight(s2)((h, t) => cons(h, t))
 
+  def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
+
   def empty[A]: Stream[A] = Empty
 
   def apply[A](as: A*): Stream[A] =

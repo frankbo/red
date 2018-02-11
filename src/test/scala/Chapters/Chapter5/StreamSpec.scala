@@ -78,4 +78,8 @@ class StreamTest extends FlatSpec with Matchers {
   "flatMap" should "go over every element in a stream a call a function + flatten the otucome" in {
     Stream(1, 2, 3).flatMap(v => Stream.cons(v + 1, Stream.empty)).toList shouldEqual Stream(2, 3, 4).toList
   }
+
+  "constant" should "create an endless amount of some given value" in {
+    Stream.constant(33).take(4).toList shouldEqual Stream(33, 33, 33, 33).toList
+  }
 }
