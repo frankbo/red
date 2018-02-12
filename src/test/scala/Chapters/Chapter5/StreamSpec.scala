@@ -91,6 +91,10 @@ class StreamTest extends FlatSpec with Matchers {
     Stream.fibs().take(7).toList shouldEqual Stream(0, 1, 1, 2, 3, 5, 8).toList
   }
 
+  "fibs2" should "calculate an infinite fibonacci series" in {
+    Stream.fibs2().take(7).toList shouldEqual Stream(0, 1, 1, 2, 3, 5, 8).toList
+  }
+
   "unfold" should "create the next value and the next state for a stream" in {
     Stream.unfold(4)((v) => Some(v, v + 1)).take(5).toList shouldEqual Stream(4, 5, 6, 7, 8).toList
   }
