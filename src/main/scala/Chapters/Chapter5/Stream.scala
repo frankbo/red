@@ -96,6 +96,12 @@ object Stream {
   def fibs2(): Stream[Int] =
     unfold((0, 1))((v) => Some(v._1, (v._2, v._1 + v._2)))
 
+  def mapUnfold[A, B](s: Stream[A])(f: A => B): Stream[B] =
+    unfold(s) {
+      case Cons(h, t) => Some(f(h()), t())
+      case Empty => None
+    }
+
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
     case Some((value, state)) => cons(value, unfold(state)(f))
     case None => Stream.empty

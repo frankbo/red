@@ -110,4 +110,8 @@ class StreamTest extends FlatSpec with Matchers {
   "ones2" should "return an infinate amount of the value 1" in {
     Stream.ones2.take(5).toList shouldEqual Stream(1, 1, 1, 1, 1).toList
   }
+
+  "mapUnfold" should "call a function on every element on the stream lazy" in {
+    Stream.mapUnfold(Stream(1, 2, 3))((v) => v + 1).toList shouldEqual Stream(2, 3, 4).toList
+  }
 }
