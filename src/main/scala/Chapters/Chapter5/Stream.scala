@@ -10,13 +10,13 @@ sealed trait Stream[+A] {
   def takeWhile(p: A => Boolean): Stream[A]
 
   def headOption: Option[A] = this match {
-    case Empty => None
+    case Empty      => None
     case Cons(h, _) => Some(h())
   }
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
     case Cons(h, t) => f(h(), t().foldRight(z)(f))
-    case _ => z
+    case _          => z
   }
 
   def forAll(p: A => Boolean): Boolean =
@@ -52,7 +52,8 @@ case object Empty extends Stream[Nothing] {
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A] {
   override def toList = h() :: t().toList
 
-  override def take(n: Int) = if (n == 0) Empty else Cons(h, () => t().take(n - 1))
+  override def take(n: Int) =
+    if (n == 0) Empty else Cons(h, () => t().take(n - 1))
 
   override def drop(n: Int) =
     if (n == 0)
@@ -96,15 +97,22 @@ object Stream {
   def fibs2(): Stream[Int] =
     unfold((0, 1))((v) => Some(v._1, (v._2, v._1 + v._2)))
 
+  def takeUnfold[A](s: Stream[A])(n: Int): Stream[A] =
+    unfold((n, s)) {
+      case (counter, Cons(h, t)) if counter > 0 =>
+        Some((h(), (counter - 1, t())))
+      case _ => None
+    }
+
   def mapUnfold[A, B](s: Stream[A])(f: A => B): Stream[B] =
     unfold(s) {
-      case Cons(h, t) => Some(f(h()), t())
-      case Empty => None
+      case Cons(h, t) => Some((f(h()), t()))
+      case Empty      => None
     }
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
     case Some((value, state)) => cons(value, unfold(state)(f))
-    case None => Stream.empty
+    case None                 => Empty
   }
 
   def empty[A]: Stream[A] = Empty
