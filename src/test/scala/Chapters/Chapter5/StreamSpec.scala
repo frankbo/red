@@ -135,4 +135,14 @@ class StreamTest extends FlatSpec with Matchers {
   "mapUnfold" should "call a function on every element on the stream lazy" in {
     Stream.mapUnfold(Stream(1, 2, 3))((v) => v + 1).toList shouldEqual Stream(2, 3, 4).toList
   }
+
+//  "startsWith" should "return true when a stream start with another one" in {
+//    Stream.startsWith(Stream(1, 2, 3))(Stream(1, 2)) shouldEqual true
+//  }
+
+  "tails" should "return a stream of streams that contain the tail of the previous tail" in {
+    val streamsAsList = Stream(1, 2, 3).tails.map(s => s.toList).toList
+    streamsAsList shouldEqual Stream(Stream(1,2,3).toList, Stream(2,3).toList, Stream(3).toList, Stream().toList).toList
+  }
+
 }
