@@ -115,6 +115,14 @@ class StreamTest extends FlatSpec with Matchers {
     Stream.takeWhileUnfold(Stream(1, 2, 3, 4, 5, 6))(v => v < 3).toList shouldEqual Stream(1, 2).toList
   }
 
+  "zipWithUnfold" should "zips to streams in tuples and calls a function on that tuple" in {
+    Stream.zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6)) { case (v1, v2) => v1 + v2 }.toList shouldEqual Stream(5, 7, 9).toList
+  }
+
+  it should "only zip for the amount of the shortest list" in {
+    Stream.zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6, 7)) { case (v1, v2) => v1 + v2 }.toList shouldEqual Stream(5, 7, 9).toList
+  }
+
   "ones2" should "return an infinate amount of the value 1" in {
     Stream.ones2.take(5).toList shouldEqual Stream(1, 1, 1, 1, 1).toList
   }
