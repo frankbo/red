@@ -10,13 +10,13 @@ sealed trait Stream[+A] {
   def takeWhile(p: A => Boolean): Stream[A]
 
   def headOption: Option[A] = this match {
-    case Empty      => None
+    case Empty => None
     case Cons(h, _) => Some(h())
   }
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
     case Cons(h, t) => f(h(), t().foldRight(z)(f))
-    case _          => z
+    case _ => z
   }
 
   def forAll(p: A => Boolean): Boolean =
@@ -104,15 +104,21 @@ object Stream {
       case _ => None
     }
 
+  def takeWhileUnfold[A](s: Stream[A])(f: A => Boolean): Stream[A] =
+    unfold(s) {
+      case Cons(h, t) if f(h()) => Some((h(), t()))
+      case _ => None
+    }
+
   def mapUnfold[A, B](s: Stream[A])(f: A => B): Stream[B] =
     unfold(s) {
       case Cons(h, t) => Some((f(h()), t()))
-      case Empty      => None
+      case Empty => None
     }
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
     case Some((value, state)) => cons(value, unfold(state)(f))
-    case None                 => Empty
+    case None => Empty
   }
 
   def empty[A]: Stream[A] = Empty

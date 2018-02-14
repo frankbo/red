@@ -111,6 +111,10 @@ class StreamTest extends FlatSpec with Matchers {
     Stream.takeUnfold(Stream(1, 2, 3, 4, 5, 6))(2).toList shouldEqual Stream(1, 2).toList
   }
 
+  "takeWhileUnfold" should "takes only elements that match the given function" in {
+    Stream.takeWhileUnfold(Stream(1, 2, 3, 4, 5, 6))(v => v < 3).toList shouldEqual Stream(1, 2).toList
+  }
+
   "ones2" should "return an infinate amount of the value 1" in {
     Stream.ones2.take(5).toList shouldEqual Stream(1, 1, 1, 1, 1).toList
   }
