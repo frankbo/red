@@ -116,6 +116,14 @@ object Stream {
       case _ => None
     }
 
+  def zipAll[A, B](s1: Stream[A])(s2: Stream[B]): Stream[(Option[A], Option[B])] =
+    unfold((s1, s2)) {
+      case (Cons(h1, t1), Cons(h2, t2)) => Some((Some(h1()), Some(h2())), (t1(), t2()))
+      case (Empty, Cons(h2, t2)) => Some((None, Some(h2())), (Empty, t2()))
+      case (Cons(h1, t1), Empty) => Some((Some(h1()), None), (t1(), Empty))
+      case _ => None
+    }
+
   def mapUnfold[A, B](s: Stream[A])(f: A => B): Stream[B] =
     unfold(s) {
       case Cons(h, t) => Some((f(h()), t()))

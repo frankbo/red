@@ -123,6 +123,11 @@ class StreamTest extends FlatSpec with Matchers {
     Stream.zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6, 7)) { case (v1, v2) => v1 + v2 }.toList shouldEqual Stream(5, 7, 9).toList
   }
 
+  "zipAll" should "continue until both streams are exausted" in {
+    Stream.zipAll(Stream(1, 2))(Stream(1, 2, 3)).toList shouldEqual Stream((Some(1), Some(1)), (Some(2), Some(2)), (None, Some(3))).toList
+    Stream.zipAll(Stream(1, 2, 4))(Stream(1, 2)).toList shouldEqual Stream((Some(1), Some(1)), (Some(2), Some(2)), (Some(4), None)).toList
+  }
+
   "ones2" should "return an infinate amount of the value 1" in {
     Stream.ones2.take(5).toList shouldEqual Stream(1, 1, 1, 1, 1).toList
   }
