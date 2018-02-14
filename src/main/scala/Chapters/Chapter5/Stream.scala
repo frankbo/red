@@ -110,6 +110,8 @@ object Stream {
       case _ => None
     }
 
+  def zipWithUnfold[A](a: Stream[A], b: Stream[A], f: ((A, A)) => A): Stream[A] = ???
+
   def mapUnfold[A, B](s: Stream[A])(f: A => B): Stream[B] =
     unfold(s) {
       case Cons(h, t) => Some((f(h()), t()))
