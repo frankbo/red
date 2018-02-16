@@ -157,4 +157,7 @@ class StreamTest extends FlatSpec with Matchers {
     streamsAsList shouldEqual Stream(Stream(1, 2, 3).toList, Stream(2, 3).toList, Stream(3).toList, Stream().toList).toList
   }
 
+  "scanRight" should "Call a function of every `tail` of the initial stream" in {
+    Stream(1, 2, 3).scanRight(0)(_ + _).toList shouldEqual Stream(6, 5, 3, 0).toList
+  }
 }
