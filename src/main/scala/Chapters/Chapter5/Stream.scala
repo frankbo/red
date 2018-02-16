@@ -122,7 +122,12 @@ object Stream {
       case _ => None
     }
 
-  // TODO startsWith
+  def startsWith[A](s1: Stream[A])(s2: Stream[A]): Boolean =
+    zipAll(s1)(s2).map {
+      case (Some(v1), Some(v2)) => v1 == v2
+      case (Some(v1), None) => true
+      case _ => false
+    }.forAll(identity)
 
   def zipAll[A, B](s1: Stream[A])(s2: Stream[B]): Stream[(Option[A], Option[B])] =
     unfold((s1, s2)) {
