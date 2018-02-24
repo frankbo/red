@@ -4,6 +4,8 @@ trait RNG {
   def nextInt: (Int, RNG)
 
   def nonNegativeInt(rng: RNG): (Int, RNG)
+
+  def double(rng: RNG): (Double, RNG)
 }
 
 case class SimpleRNG(seed: Long) extends RNG {
@@ -18,5 +20,11 @@ case class SimpleRNG(seed: Long) extends RNG {
   override def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (v1, n1) = rng.nextInt
     if (v1 >= 0) (v1, n1) else nonNegativeInt(n1)
+  }
+
+  override def double(rng: RNG) = {
+    val rndDouble = nonNegativeInt(rng)._1.toDouble / (Int.MaxValue - 1).toDouble
+    println(rndDouble)
+    (rndDouble, rng)
   }
 }
