@@ -41,4 +41,6 @@ object RNG {
     val (d3, n3) = double(n2)
     ((d1, d2, d3), n3)
   }
+
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = ???
 }

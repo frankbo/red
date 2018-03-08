@@ -23,4 +23,8 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   "double3" should "return 3 random double values" in {
     RNG.double3(SimpleRNG(123)) shouldEqual((0.022037007845938206, 0.179954728577286, 0.3753405185416341), SimpleRNG(52824481913908L))
   }
+
+  "ints" should "return a list of random integers" in {
+    RNG.ints(3)(SimpleRNG(123)) shouldEqual(List(123, 123, 123), SimpleRNG(123))
+  }
 }
