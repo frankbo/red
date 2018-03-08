@@ -29,4 +29,16 @@ object RNG {
     val (v2, n2) = double(n1)
     ((v1, v2), n2)
   }
+
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val ((i, d), ran) = intDouble(rng)
+    ((d, i), ran)
+  }
+
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (d1, n1) = double(rng)
+    val (d2, n2) = double(n1)
+    val (d3, n3) = double(n2)
+    ((d1, d2, d3), n3)
+  }
 }

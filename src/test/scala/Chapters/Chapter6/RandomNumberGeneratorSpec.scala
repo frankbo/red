@@ -15,4 +15,12 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   "intDouble" should "return a random tuple of int and double" in {
     RNG.intDouble(SimpleRNG(123)) shouldEqual((47324114, 0.179954728577286), SimpleRNG(256148600186669L))
   }
+
+  "doubleInt" should "return a random tuple of double and int" in {
+    RNG.doubleInt(SimpleRNG(123)) shouldEqual((0.179954728577286, 47324114), SimpleRNG(256148600186669L))
+  }
+
+  "double3" should "return 3 random double values" in {
+    RNG.double3(SimpleRNG(123)) shouldEqual((0.022037007845938206, 0.179954728577286, 0.3753405185416341), SimpleRNG(52824481913908L))
+  }
 }
