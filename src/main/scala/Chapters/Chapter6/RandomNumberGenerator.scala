@@ -49,7 +49,7 @@ object RNG {
       val (v, ng) = RNG.nonNegativeInt(rand)
       l match {
         case xs if c > 0 => go(v :: xs, c - 1, ng)
-        case _                    => (l, rand)
+        case _           => (l, rand)
       }
     }
 

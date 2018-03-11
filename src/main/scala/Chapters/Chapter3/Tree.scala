@@ -9,27 +9,27 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 object Tree {
   def size[A](tree: Tree[A]): Int = tree match {
     case Branch(l, r) => 1 + size(l) + size(r)
-    case Leaf(_) => 1
+    case Leaf(_)      => 1
   }
 
   def tMax(tree: Tree[Int]): Int = tree match {
     case Branch(l, r) => tMax(l) max tMax(r)
-    case Leaf(v) => v
+    case Leaf(v)      => v
   }
 
   def depth[A](tree: Tree[A], depthAcc: Int): Int = tree match {
     case Branch(l, r) => depth(l, depthAcc + 1) max depth(r, depthAcc + 1)
-    case Leaf(_) => depthAcc + 1
+    case Leaf(_)      => depthAcc + 1
   }
 
   def map[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
     case Branch(b1, b2) => Branch(map(b1)(f), map(b2)(f))
-    case Leaf(a) => Leaf(f(a))
+    case Leaf(a)        => Leaf(f(a))
   }
 
   def fold[A, B](tree: Tree[A])(lf: A => B)(bf: (B, B) => B): B = tree match {
     case Branch(l, r) => bf(fold(l)(lf)(bf), fold(r)(lf)(bf))
-    case Leaf(a) => lf(a)
+    case Leaf(a)      => lf(a)
   }
 
   def foldCount[A](tree: Tree[A]): Int =

@@ -32,7 +32,10 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "takeWhile" should "return values until functional call is truthy" in {
-    Stream(1, 2, 3, 4, 5).takeWhile(v => v < 4).toList shouldEqual Stream(1, 2, 3).toList
+    Stream(1, 2, 3, 4, 5).takeWhile(v => v < 4).toList shouldEqual Stream(
+      1,
+      2,
+      3).toList
   }
 
   it should "return an empty stream when the list is empty" in {
@@ -48,7 +51,9 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "taleWhile2" should "take elements from a stream as long as the passed function is truthy" in {
-    Stream(1, 2, 3, 4).takeWhile2((v) => v <= 2).toList shouldEqual Stream(1, 2).toList
+    Stream(1, 2, 3, 4)
+      .takeWhile2((v) => v <= 2)
+      .toList shouldEqual Stream(1, 2).toList
   }
 
   "headOption2" should "return the head wrapped in a Some when available" in {
@@ -64,7 +69,9 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "filter" should "only return the values that match the function that filters" in {
-    Stream(1, 2, 3).filter(v => v % 2 == 1).toList shouldEqual Stream(1, 3).toList
+    Stream(1, 2, 3)
+      .filter(v => v % 2 == 1)
+      .toList shouldEqual Stream(1, 3).toList
   }
 
   it should "return an empty list when no element are filtered out" in {
@@ -72,11 +79,14 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "append" should "combine two Streams to one" in {
-    Stream.append(Stream(1, 2, 3), Stream(4, 5, 6)).toList shouldEqual Stream(1, 2, 3, 4, 5, 6).toList
+    Stream.append(Stream(1, 2, 3), Stream(4, 5, 6)).toList shouldEqual Stream(1,
+      2, 3, 4, 5, 6).toList
   }
 
   "flatMap" should "go over every element in a stream a call a function + flatten the otucome" in {
-    Stream(1, 2, 3).flatMap(v => Stream.cons(v + 1, Stream.empty)).toList shouldEqual Stream(2, 3, 4).toList
+    Stream(1, 2, 3)
+      .flatMap(v => Stream.cons(v + 1, Stream.empty))
+      .toList shouldEqual Stream(2, 3, 4).toList
   }
 
   "constant" should "create an endless amount of some given value" in {
@@ -96,7 +106,12 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "unfold" should "create the next value and the next state for a stream" in {
-    Stream.unfold(4)((v) => Some(v, v + 1)).take(5).toList shouldEqual Stream(4, 5, 6, 7, 8).toList
+    Stream.unfold(4)((v) => Some(v, v + 1)).take(5).toList shouldEqual Stream(
+      4,
+      5,
+      6,
+      7,
+      8).toList
   }
 
   "from2" should "start from a given value and counts infinite time + 1" in {
@@ -104,28 +119,49 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "constant2" should "create an endless amount of some given value" in {
-    Stream.constant2(33).take(4).toList shouldEqual Stream(33, 33, 33, 33).toList
+    Stream
+      .constant2(33)
+      .take(4)
+      .toList shouldEqual Stream(33, 33, 33, 33).toList
   }
 
   "takeUnfold" should "takes only a given amount of elements from the stream" in {
-    Stream.takeUnfold(Stream(1, 2, 3, 4, 5, 6))(2).toList shouldEqual Stream(1, 2).toList
+    Stream.takeUnfold(Stream(1, 2, 3, 4, 5, 6))(2).toList shouldEqual Stream(
+      1,
+      2).toList
   }
 
   "takeWhileUnfold" should "takes only elements that match the given function" in {
-    Stream.takeWhileUnfold(Stream(1, 2, 3, 4, 5, 6))(v => v < 3).toList shouldEqual Stream(1, 2).toList
+    Stream
+      .takeWhileUnfold(Stream(1, 2, 3, 4, 5, 6))(v => v < 3)
+      .toList shouldEqual Stream(1, 2).toList
   }
 
   "zipWithUnfold" should "zips to streams in tuples and calls a function on that tuple" in {
-    Stream.zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6)) { case (v1, v2) => v1 + v2 }.toList shouldEqual Stream(5, 7, 9).toList
+    Stream
+      .zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6)) {
+        case (v1, v2) => v1 + v2
+      }
+      .toList shouldEqual Stream(5, 7, 9).toList
   }
 
   it should "only zip for the amount of the shortest list" in {
-    Stream.zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6, 7)) { case (v1, v2) => v1 + v2 }.toList shouldEqual Stream(5, 7, 9).toList
+    Stream
+      .zipWithUnfold(Stream(1, 2, 3))(Stream(4, 5, 6, 7)) {
+        case (v1, v2) => v1 + v2
+      }
+      .toList shouldEqual Stream(5, 7, 9).toList
   }
 
   "zipAll" should "continue until both streams are exausted" in {
-    Stream.zipAll(Stream(1, 2))(Stream(1, 2, 3)).toList shouldEqual Stream((Some(1), Some(1)), (Some(2), Some(2)), (None, Some(3))).toList
-    Stream.zipAll(Stream(1, 2, 4))(Stream(1, 2)).toList shouldEqual Stream((Some(1), Some(1)), (Some(2), Some(2)), (Some(4), None)).toList
+    Stream.zipAll(Stream(1, 2))(Stream(1, 2, 3)).toList shouldEqual Stream(
+      (Some(1), Some(1)),
+      (Some(2), Some(2)),
+      (None, Some(3))).toList
+    Stream.zipAll(Stream(1, 2, 4))(Stream(1, 2)).toList shouldEqual Stream(
+      (Some(1), Some(1)),
+      (Some(2), Some(2)),
+      (Some(4), None)).toList
   }
 
   "ones2" should "return an infinate amount of the value 1" in {
@@ -133,7 +169,10 @@ class StreamTest extends FlatSpec with Matchers {
   }
 
   "mapUnfold" should "call a function on every element on the stream lazy" in {
-    Stream.mapUnfold(Stream(1, 2, 3))((v) => v + 1).toList shouldEqual Stream(2, 3, 4).toList
+    Stream.mapUnfold(Stream(1, 2, 3))((v) => v + 1).toList shouldEqual Stream(
+      2,
+      3,
+      4).toList
   }
 
   "startsWith" should "return true when a stream start with another one" in {
@@ -154,10 +193,15 @@ class StreamTest extends FlatSpec with Matchers {
 
   "tails" should "return a stream of streams that contain the tail of the previous tail" in {
     val streamsAsList = Stream(1, 2, 3).tails.map(s => s.toList).toList
-    streamsAsList shouldEqual Stream(Stream(1, 2, 3).toList, Stream(2, 3).toList, Stream(3).toList, Stream().toList).toList
+    streamsAsList shouldEqual Stream(Stream(1, 2, 3).toList,
+                                     Stream(2, 3).toList,
+                                     Stream(3).toList,
+                                     Stream().toList).toList
   }
 
   "scanRight" should "Call a function of every `tail` of the initial stream" in {
-    Stream(1, 2, 3).scanRight(0)(_ + _).toList shouldEqual Stream(6, 5, 3, 0).toList
+    Stream(1, 2, 3)
+      .scanRight(0)(_ + _)
+      .toList shouldEqual Stream(6, 5, 3, 0).toList
   }
 }

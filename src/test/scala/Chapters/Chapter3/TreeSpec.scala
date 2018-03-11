@@ -16,17 +16,15 @@ class TreeSpec extends FlatSpec with Matchers {
   "depth" should "return the path length from root" in {
     val tree = Branch(
       Leaf(1),
-      Branch(
-        Leaf(1),
-        Branch(Leaf(1),
-          Branch(Leaf(1), Leaf(1))))
+      Branch(Leaf(1), Branch(Leaf(1), Branch(Leaf(1), Leaf(1))))
     )
     Tree.depth(tree, 0) shouldEqual 5
   }
 
   "map" should "change every leave based on the passed in function" in {
     val tree = Branch(Branch(Leaf(4), Leaf(22)), Branch(Leaf(7), Leaf(21)))
-    val expectedTree = Branch(Branch(Leaf(5), Leaf(23)), Branch(Leaf(8), Leaf(22)))
+    val expectedTree =
+      Branch(Branch(Leaf(5), Leaf(23)), Branch(Leaf(8), Leaf(22)))
     Tree.map(tree)(addOne) shouldEqual expectedTree
   }
 
@@ -52,7 +50,8 @@ class TreeSpec extends FlatSpec with Matchers {
 
   "foldMap" should "be the max depth of a tree" in {
     val tree = Branch(Branch(Leaf(4), Leaf(22)), Branch(Leaf(7), Leaf(21)))
-    val expectedTree = Branch(Branch(Leaf(5), Leaf(23)), Branch(Leaf(8), Leaf(22)))
+    val expectedTree =
+      Branch(Branch(Leaf(5), Leaf(23)), Branch(Leaf(8), Leaf(22)))
     Tree.foldMap(tree)(addOne) shouldEqual expectedTree
   }
 

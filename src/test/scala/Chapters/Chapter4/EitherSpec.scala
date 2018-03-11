@@ -26,7 +26,8 @@ class EitherTest extends FlatSpec with Matchers {
 
   it should "return the fallback when an incorrect value was passed" in {
     Left("Something went wrong").orElse(Right(33)) shouldEqual Right(33)
-    Left("Something went wrong").orElse(Left("Just wrong")) shouldEqual Left("Just wrong")
+    Left("Something went wrong").orElse(Left("Just wrong")) shouldEqual Left(
+      "Just wrong")
   }
 
   "map2" should "return result of passed function when two valid values were passed to function" in {
@@ -34,28 +35,37 @@ class EitherTest extends FlatSpec with Matchers {
   }
 
   it should "return a Left option when current value is wrong" in {
-    Left("Some error").map2(Right(4))((_, _) => 1 + 2) shouldEqual Left("Some error")
-    Left("Some error").map2(Left("Some other error"))((_, _) => 1 + 2) shouldEqual Left("Some error")
+    Left("Some error").map2(Right(4))((_, _) => 1 + 2) shouldEqual Left(
+      "Some error")
+    Left("Some error").map2(Left("Some other error"))((_, _) => 1 + 2) shouldEqual Left(
+      "Some error")
   }
 
   it should "return the error of the second Either when the current element is correct" in {
-    Right(22).map2(Left("Some error"))((_, _) => 1 + 2) shouldEqual Left("Some error")
+    Right(22).map2(Left("Some error"))((_, _) => 1 + 2) shouldEqual Left(
+      "Some error")
   }
 
   "sequence" should "return right with a list included" in {
-    Either.sequence(List(Right(1), Right(2), Right(3))) shouldEqual Right(List(1, 2, 3))
+    Either.sequence(List(Right(1), Right(2), Right(3))) shouldEqual Right(
+      List(1, 2, 3))
   }
 
   it should "fail at the first error" in {
-    Either.sequence(List(Left("Nooo"), Right(2), Left("Bad things will happen here"))) shouldEqual Left("Nooo")
+    Either.sequence(List(Left("Nooo"),
+                         Right(2),
+                         Left("Bad things will happen here"))) shouldEqual Left(
+      "Nooo")
   }
 
   "traverse" should "Runs a function on every element and returns right if everything went fine" in {
-    Either.traverse(List(1, 2, 3))(v => Right(v + 1)) shouldEqual Right(List(2, 3, 4))
+    Either.traverse(List(1, 2, 3))(v => Right(v + 1)) shouldEqual Right(
+      List(2, 3, 4))
   }
 
   it should "return Left with an error message, when one of the elements is None" in {
-    Either.traverse(List(1, 2, 3))(_ => Left("Some error")) shouldEqual Left("Some error")
+    Either.traverse(List(1, 2, 3))(_ => Left("Some error")) shouldEqual Left(
+      "Some error")
   }
 
   it should "return Right Nil when the list is empty" in {

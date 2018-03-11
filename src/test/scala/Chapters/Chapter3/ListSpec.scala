@@ -85,11 +85,13 @@ class ListSpec extends FlatSpec with Matchers {
   }
 
   "appendWithFold" should "append one list to another" in {
-    List.appendWithFold(List(1, 2, 3), List(4, 5, 6)) shouldEqual List(1, 2, 3, 4, 5, 6)
+    List.appendWithFold(List(1, 2, 3), List(4, 5, 6)) shouldEqual List(1, 2, 3,
+      4, 5, 6)
   }
 
   "flatten" should "flatten lists of lists to own list" in {
-    List.flatten(List(List(1, 2, 3), List(1, 2, 3))) shouldEqual List(1, 2, 3, 1, 2, 3)
+    List.flatten(List(List(1, 2, 3), List(1, 2, 3))) shouldEqual List(1, 2, 3,
+      1, 2, 3)
   }
 
   "addOneToEveryElement" should "add one on every element in the list" in {
@@ -97,7 +99,10 @@ class ListSpec extends FlatSpec with Matchers {
   }
 
   "doubleToString" should "transform every double to string in a list" in {
-    List.doubleToString(List(1.1, 2.2, 3.3, 4.4)) shouldEqual List("1.1", "2.2", "3.3", "4.4")
+    List.doubleToString(List(1.1, 2.2, 3.3, 4.4)) shouldEqual List("1.1",
+                                                                   "2.2",
+                                                                   "3.3",
+                                                                   "4.4")
   }
 
   "map" should "modify every element in a list" in {
@@ -109,7 +114,8 @@ class ListSpec extends FlatSpec with Matchers {
   }
 
   "flatMap" should "flatten and map a list of elements" in {
-    List.flatMap(List(1, 2, 3))(i => List(i, i)) shouldEqual List(1, 1, 2, 2, 3, 3)
+    List.flatMap(List(1, 2, 3))(i => List(i, i)) shouldEqual List(1, 1, 2, 2, 3,
+      3)
   }
 
   "flatMapFilter" should "filter a list based on callback function" in {
@@ -117,9 +123,17 @@ class ListSpec extends FlatSpec with Matchers {
   }
 
   "zipWith" should "combine two list through addition" in {
-    List.zipWith(List(1, 2, 3), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6)
-    List.zipWith(List(1, 2, 3), List(1, 2, 3, 22), addElements) shouldEqual List(2, 4, 6)
-    List.zipWith(List(1, 2, 3, 35), List(1, 2, 3), addElements) shouldEqual List(2, 4, 6)
+    List.zipWith(List(1, 2, 3), List(1, 2, 3), addElements) shouldEqual List(2,
+                                                                             4,
+                                                                             6)
+    List.zipWith(List(1, 2, 3), List(1, 2, 3, 22), addElements) shouldEqual List(
+      2,
+      4,
+      6)
+    List.zipWith(List(1, 2, 3, 35), List(1, 2, 3), addElements) shouldEqual List(
+      2,
+      4,
+      6)
   }
 
   def addElements(t: (Int, Int)): Int = t._1 + t._2

@@ -66,7 +66,8 @@ class OptionTest extends FlatSpec with Matchers {
   }
 
   "sequence" should "return an Some with a list included" in {
-    Option.sequence(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
+    Option.sequence(List(Some(1), Some(2), Some(3))) shouldEqual Some(
+      List(1, 2, 3))
   }
 
   it should "return None when one of the elements is None" in {
@@ -78,7 +79,8 @@ class OptionTest extends FlatSpec with Matchers {
   }
 
   "traverse" should "Runs a function on every element and returns Some when successful" in {
-    Option.traverse(List(1, 2, 3))(v => Some(v + 1)) shouldEqual Some(List(2, 3, 4))
+    Option.traverse(List(1, 2, 3))(v => Some(v + 1)) shouldEqual Some(
+      List(2, 3, 4))
   }
 
   it should "return None when one of the elements is None" in {
