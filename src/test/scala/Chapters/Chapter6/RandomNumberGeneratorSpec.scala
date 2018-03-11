@@ -25,6 +25,6 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   }
 
   "ints" should "return a list of random integers" in {
-    RNG.ints(3)(SimpleRNG(123)) shouldEqual(List(123, 123, 123), SimpleRNG(123))
+    RNG.ints(3)(SimpleRNG(123)) shouldEqual(List(806037626, 386449837, 47324114),SimpleRNG(52824481913908L))
   }
 }

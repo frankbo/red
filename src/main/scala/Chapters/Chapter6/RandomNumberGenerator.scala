@@ -1,5 +1,7 @@
 package Chapters.Chapter6
 
+import scala.annotation.tailrec
+
 trait RNG {
   def nextInt: (Int, RNG)
 }
@@ -42,5 +44,15 @@ object RNG {
     ((d1, d2, d3), n3)
   }
 
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) = ???
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    def go(l: List[Int], c: Int, rand: RNG): (List[Int], RNG) = {
+      val (v, ng) = RNG.nonNegativeInt(rand)
+      l match {
+        case xs if c > 0 => go(v :: xs, c - 1, ng)
+        case _                    => (l, rand)
+      }
+    }
+
+    go(List.empty, count, rng)
+  }
 }
