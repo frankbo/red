@@ -38,4 +38,14 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
                                                   47324114), SimpleRNG(
       52824481913908L))
   }
+
+  "map2" should "combine two the map results to results" in {
+    RNG.map2(RNG.int, RNG.int)((v1, v2) => v1 + v2)(SimpleRNG(123)) shouldEqual
+      (-339125724, SimpleRNG(256148600186669L))
+  }
+
+  "map2Perri" should "combine two the map results to results" in {
+    RNG.map2Perri(RNG.int)(RNG.int)((v1, v2) => v1 + v2)(SimpleRNG(123)) shouldEqual
+      (-339125724, SimpleRNG(256148600186669L))
+  }
 }

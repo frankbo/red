@@ -27,6 +27,24 @@ object RNG {
     (f(a), rng2)
   }
 
+  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    rng => {
+      val (v1, n1) = ra(rng)
+      val (v2, n2) = rb(n1)
+      (f(v1, v2), n2)
+    }
+
+  // Map2 the Perri way
+  def map2Perri[A, B, C]: Rand[A] => Rand[B] => ((A, B) => C) => Rand[C] =
+    ra =>
+      rb =>
+        f =>
+          rng => {
+            val (v1, n1) = ra(rng)
+            val (v2, n2) = rb(n1)
+            (f(v1, v2), n2)
+    }
+
   def nonNegativeEven: Rand[Int] = map(nonNegativeInt)(i => i - i % 2)
 
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
@@ -41,7 +59,6 @@ object RNG {
 
   def doubleWithMap(rng: RNG): (Double, RNG) =
     map(nonNegativeInt)(v => v / (Int.MaxValue.toDouble + 1))(rng)
-
 
   def intDouble(rng: RNG): ((Int, Double), RNG) = {
     val (v1, n1) = rng.nextInt
