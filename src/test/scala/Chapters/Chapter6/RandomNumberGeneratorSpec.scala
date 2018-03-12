@@ -11,6 +11,10 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
     RNG.double(SimpleRNG(123))._1 should (be > 0.0 and be < 1.0)
   }
 
+  "doubleWithMap" should "always a random number between 0 and 1 as Double" in {
+    RNG.doubleWithMap(SimpleRNG(123))._1 should (be > 0.0 and be < 1.0)
+  }
+
   "intDouble" should "return a random tuple of int and double" in {
     RNG.intDouble(SimpleRNG(123)) shouldEqual ((47324114, 0.179954728577286), SimpleRNG(
       256148600186669L))
