@@ -96,5 +96,8 @@ object RNG {
     go(List.empty, count, rng)
   }
 
-  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = fs match {
+    case Nil => unit(List.empty)
+    case x :: xs => RNG.map2(x, sequence(xs))((v, l) => v :: l)
+  }
 }

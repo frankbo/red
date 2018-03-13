@@ -48,4 +48,9 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
     RNG.map2Perri(RNG.int)(RNG.int)((v1, v2) => v1 + v2)(SimpleRNG(123)) shouldEqual
       (-339125724, SimpleRNG(256148600186669L))
   }
+
+  "sequence" should "transform a list of elements to one element that contains a list" in {
+    RNG.sequence(List(RNG.int, RNG.int, RNG.int))(SimpleRNG(123)) shouldEqual
+      (List(47324114, -386449838, 806037626), SimpleRNG(52824481913908L))
+  }
 }
