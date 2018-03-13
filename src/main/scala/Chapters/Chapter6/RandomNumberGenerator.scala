@@ -45,6 +45,8 @@ object RNG {
             (f(v1, v2), n2)
     }
 
+  def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
+
   def nonNegativeEven: Rand[Int] = map(nonNegativeInt)(i => i - i % 2)
 
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
@@ -71,6 +73,10 @@ object RNG {
     ((d, i), ran)
   }
 
+  val randIntDouble: Rand[(Int, Double)] = both(int, double)
+
+  val randDoubleInt: Rand[(Double, Int)] = both(double, int)
+
   def double3(rng: RNG): ((Double, Double, Double), RNG) = {
     val (d1, n1) = double(rng)
     val (d2, n2) = double(n1)
@@ -89,4 +95,6 @@ object RNG {
 
     go(List.empty, count, rng)
   }
+
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
 }
