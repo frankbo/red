@@ -61,4 +61,9 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   "mapWithFlatMap" should "combine return a new Random value" in {
     RNG.mapWithFlatMap(RNG.unit(2))(v => v + 1)(SimpleRNG(123)) shouldEqual (3, SimpleRNG(123))
   }
+
+  "map2WithFlatMap" should "combine return a new Random value" in {
+    RNG.map2WithFlatMap(RNG.int, RNG.int)((v1, v2) => v1 + v2)(SimpleRNG(123)) shouldEqual
+      (-339125724, SimpleRNG(256148600186669L))
+  }
 }
