@@ -100,4 +100,10 @@ object RNG {
     case Nil => unit(List.empty)
     case x :: xs => RNG.map2(x, sequence(xs))((v, l) => v :: l)
   }
+
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = rng => {
+    val (v, r) = f(rng)
+    g(v)(r)
+  }
+
 }
