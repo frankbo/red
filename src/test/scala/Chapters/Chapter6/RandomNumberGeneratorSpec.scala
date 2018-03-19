@@ -55,11 +55,13 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   }
 
   "flatMap" should "flatten and map a Rand value" in {
-    RNG.flatMap(RNG.unit(2))(v => RNG.unit(v + 1))(SimpleRNG(123)) shouldEqual (3, SimpleRNG(123))
+    RNG.flatMap(RNG.unit(2))(v => RNG.unit(v + 1))(SimpleRNG(123)) shouldEqual (3, SimpleRNG(
+      123))
   }
 
   "mapWithFlatMap" should "combine return a new Random value" in {
-    RNG.mapWithFlatMap(RNG.unit(2))(v => v + 1)(SimpleRNG(123)) shouldEqual (3, SimpleRNG(123))
+    RNG.mapWithFlatMap(RNG.unit(2))(v => v + 1)(SimpleRNG(123)) shouldEqual (3, SimpleRNG(
+      123))
   }
 
   "map2WithFlatMap" should "combine return a new Random value" in {
@@ -77,10 +79,16 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   }
 
   "map2" should "map over two States and return one new mapped State" in {
-    State.unit[Int, Int](11).map2(State.unit(22))(_ + _).run(123) shouldEqual (33, 123)
+    State
+      .unit[Int, Int](11)
+      .map2(State.unit(22))(_ + _)
+      .run(123) shouldEqual (33, 123)
   }
 
   "flatMap" should "return a new state with a flattened and mapped value" in {
-    State.unit[Int, Int](1).flatMap(v => State.unit(v + 1)).run(1234) shouldEqual (2, 1234)
+    State
+      .unit[Int, Int](1)
+      .flatMap(v => State.unit(v + 1))
+      .run(1234) shouldEqual (2, 1234)
   }
 }
