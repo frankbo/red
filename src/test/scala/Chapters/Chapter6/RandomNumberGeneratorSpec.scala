@@ -66,4 +66,21 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
     RNG.map2WithFlatMap(RNG.int, RNG.int)((v1, v2) => v1 + v2)(SimpleRNG(123)) shouldEqual
       (-339125724, SimpleRNG(256148600186669L))
   }
+
+  // Tests for state
+  "unit" should "return a tuple with the given value and a state" in {
+    State.unit(1).run(1234) shouldEqual (1, 1234)
+  }
+
+  "map" should "map return a new state with a mapped vale" in {
+    State.unit(1).map(_ + 1).run(1234) shouldEqual (2, 1234)
+  }
+
+  "map2" should "map over two States and return one new mapped State" in {
+    State.unit[Int, Int](11).map2(State.unit(22))(_ + _).run(123) shouldEqual (33, 123)
+  }
+
+  "flatMap" should "return a new state with a flattened and mapped value" in {
+    State.unit[Int, Int](1).flatMap(v => State.unit(v + 1)).run(1234) shouldEqual (2, 1234)
+  }
 }
