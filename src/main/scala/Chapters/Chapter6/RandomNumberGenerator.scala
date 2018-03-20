@@ -45,7 +45,7 @@ object RNG {
             val (v1, n1) = ra(rng)
             val (v2, n2) = rb(n1)
             (f(v1, v2), n2)
-    }
+          }
 
   def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A, B)] = map2(ra, rb)((_, _))
 
@@ -91,7 +91,7 @@ object RNG {
       val (v, ng) = RNG.nonNegativeInt(rand)
       l match {
         case xs if c > 0 => go(v :: xs, c - 1, ng)
-        case _           => (l, rand)
+        case _ => (l, rand)
       }
     }
 
@@ -99,7 +99,7 @@ object RNG {
   }
 
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = fs match {
-    case Nil     => unit(List.empty)
+    case Nil => unit(List.empty)
     case x :: xs => RNG.map2(x, sequence(xs))((v, l) => v :: l)
   }
 
@@ -112,7 +112,7 @@ object RNG {
     flatMap(s)(v => unit(f(v)))
 
   def map2WithFlatMap[A, B, C](ra: Rand[A], rb: Rand[B])(
-      f: (A, B) => C): Rand[C] =
+    f: (A, B) => C): Rand[C] =
     flatMap(ra)(v1 => map(rb)(v2 => f(v1, v2)))
 
 }
