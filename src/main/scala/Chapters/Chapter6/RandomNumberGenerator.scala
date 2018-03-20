@@ -1,5 +1,7 @@
 package Chapters.Chapter6
 
+import Chapters.Chapter6.RNG.{sequence, unit}
+
 import scala.annotation.tailrec
 
 trait RNG {
@@ -141,4 +143,9 @@ case class State[S, +A](run: S => (A, S)) {
 
 object State {
   def unit[S, A](a: A): State[S, A] = State(s => (a, s))
+
+  def sequence[S, A](l: List[State[S, A]]): State[S, List[A]] = l match {
+    case Nil => unit(List.empty)
+    case x :: xs => x.map2(sequence(xs))((v, nl) => v :: nl)
+  }
 }

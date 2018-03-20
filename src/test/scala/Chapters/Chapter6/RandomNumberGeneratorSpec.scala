@@ -91,4 +91,9 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
       .flatMap(v => State.unit(v + 1))
       .run(1234) shouldEqual (2, 1234)
   }
+
+  "sequence" should "wrap list in container element. Move wrapper from inside to outside" in {
+    State.sequence(List(State.unit[Int, Int](1), State.unit[Int, Int](2), State.unit[Int, Int](3))).run(123) shouldEqual
+      ((List(1, 2, 3), 123))
+  }
 }
