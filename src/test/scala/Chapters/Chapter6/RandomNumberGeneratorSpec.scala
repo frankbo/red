@@ -93,7 +93,56 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   }
 
   "sequence" should "wrap list in container element. Move wrapper from inside to outside" in {
-    State.sequence(List(State.unit[Int, Int](1), State.unit[Int, Int](2), State.unit[Int, Int](3))).run(123) shouldEqual
+    State
+      .sequence(
+        List(State.unit[Int, Int](1),
+          State.unit[Int, Int](2),
+          State.unit[Int, Int](3)))
+      .run(123) shouldEqual
       ((List(1, 2, 3), 123))
+  }
+
+  // Tests for the candy machine
+  "simulateMachine" should "unlock when a coin was insert" in {
+    Machine
+      .simulateMachine(List(Coin))
+      .run(Machine(locked = true, 1, 2)) shouldEqual ((1, 3), Machine(locked = false, 1, 3))
+
+  }
+
+  it should "lock after a knob unlocked the the machine and dispence a candy" in {
+    Machine
+      .simulateMachine(List(Turn))
+      .run(Machine(locked = false, 1, 2)) shouldEqual ((0, 2), Machine(locked = true, 0, 2))
+  }
+
+  it should "do nothing when turning the knob on a locked machine" in {
+    Machine
+      .simulateMachine(List(Turn))
+      .run(Machine(locked = true, 1, 2)) shouldEqual ((1, 2), Machine(locked = true, 1, 2))
+  }
+
+  it should "do nothing when inserting a coin into an unlocked machine" in {
+    Machine
+      .simulateMachine(List(Coin))
+      .run(Machine(locked = false, 1, 2)) shouldEqual ((1, 2), Machine(locked = false, 1, 2))
+  }
+
+  it should "ignore Turns when there are no candies left" in {
+    Machine
+      .simulateMachine(List(Turn))
+      .run(Machine(locked = false, 0, 2)) shouldEqual ((0, 2), Machine(locked = false, 0, 2))
+  }
+
+  it should "ignore Coins when there are no candies left" in {
+    Machine
+      .simulateMachine(List(Coin))
+      .run(Machine(locked = false, 0, 2)) shouldEqual ((0, 2), Machine(locked = false, 0, 2))
+  }
+
+  it should "give me two candies after inserting a Coin and Turn, insert another Coin and Turn again" in {
+    Machine
+      .simulateMachine(List(Coin, Turn, Coin, Turn))
+      .run(Machine(locked = false, 2, 2)) shouldEqual ((0, 2), Machine(locked = false, 0, 4))
   }
 }
