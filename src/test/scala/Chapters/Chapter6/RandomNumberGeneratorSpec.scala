@@ -143,6 +143,6 @@ class RandomNumberGeneratorSpec extends FlatSpec with Matchers {
   it should "give me two candies after inserting a Coin and Turn, insert another Coin and Turn again" in {
     Machine
       .simulateMachine(List(Coin, Turn, Coin, Turn))
-      .run(Machine(locked = false, 2, 2)) shouldEqual ((0, 2), Machine(locked = false, 0, 4))
+      .run(Machine(locked = true, 2, 2)) shouldEqual ((0, 4), Machine(locked = true, 0, 4))
   }
 }

@@ -144,10 +144,11 @@ case class State[S, +A](run: S => (A, S)) {
 
   def set[S](s: S): State[S, Unit] = State(_ => ((), s))
 
-  def modify[S](f: S => S): State[S, Unit] = for {
-    s <- get
-    _ <- set(f(s))
-  } yield ()
+  def modify[S](f: S => S): State[S, Unit] =
+    for {
+      s <- get
+      _ <- set(f(s))
+    } yield ()
 }
 
 object State {
@@ -171,19 +172,17 @@ object Machine {
   def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] =
     inputs match {
       case x :: xs =>
-        State(s => {
+        State[Machine, (Int, Int)](s => {
           x match {
-            case Coin if s.candies > 0 && s.locked => {
+            case Coin if s.candies > 0 && s.locked =>
               ((1, s.coins + 1),
                Machine(locked = false, s.candies, s.coins + 1))
-            }
-            case Turn if s.candies > 0 && !s.locked => {
+            case Turn if s.candies > 0 && !s.locked =>
               ((s.candies - 1, s.coins),
                Machine(locked = true, s.candies - 1, s.coins))
-            }
             case _ => ((s.candies, s.coins), s)
           }
-        })
-      case Nil     => State(s => ((s.candies, s.coins), s))
+        }).flatMap(_ => simulateMachine(xs))
+      case Nil => State(s => ((s.candies, s.coins), s))
     }
 }
